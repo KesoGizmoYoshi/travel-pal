@@ -39,15 +39,19 @@
             <Label 
                 Content="Username"/>
             <TextBox 
-                />
+                x:Name="txtUserName"/>
+            <ComboBox
+                x:Name="cbCountries"/>
             <Label 
                 Content="Warning"/>
             <Label 
                 Content="Password"/>
-            <PasswordBox />
+            <PasswordBox 
+                x:Name="pbPassword"/>
             <Label 
                 Content="Confirm Password"/>
-            <PasswordBox />
+            <PasswordBox 
+                x:Name="pbConfirmPassword"/>
             <Label 
                 Content="Warning"/>
         </StackPanel>
@@ -61,6 +65,6 @@
             Grid.Column="1"
             Grid.Row="6"
             x:Name="btnSave"
-            Content="Save"/>
+            Content="Save" Click="btnSave_Click"/>
     </Grid>
 </Window>

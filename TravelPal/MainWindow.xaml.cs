@@ -45,7 +45,18 @@ namespace TravelPal
             string username = txtUsername.Text;
             string password = pbPassword.Password;
 
-            bool isFoundUser = false;
+            bool isSignInSuccessful = userManager.SignInUser(username, password);
+
+            if (isSignInSuccessful)
+            {
+                TravelsWindow travelsWindow = new(userManager);
+                travelsWindow.Show();
+                Close();
+            }
+            else
+            {
+                MessageBox.Show("Username or password is incorrect", "Warning");
+            }
 
             //foreach (IUser user in users)
             //{
@@ -60,10 +71,6 @@ namespace TravelPal
             //    }
             //}
 
-            if (!isFoundUser)
-            {
-                MessageBox.Show("Username or password is incorrect", "Warning");
-            }
         }
 
         private void btnRegister_Click(object sender, RoutedEventArgs e)

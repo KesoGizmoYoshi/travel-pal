@@ -22,32 +22,56 @@ public class UserManager
 
     public bool AddUser(IUser userToAdd)
     {
-        foreach(IUser user in Users)
+        if (ValidateUsername(userToAdd.Username))
         {
-            if(user.Username.Equals(userToAdd.Username)) 
+            Users.Add(userToAdd);
+
+            return true;
+        }
+
+        return false;
+    }
+
+    public bool UpdateUsername(IUser userToUpdate, string newUsername)
+    {
+        if (ValidateUsername(newUsername))
+        {
+            userToUpdate.Username = newUsername;
+
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    private bool ValidateUsername(string username)
+    {
+        foreach (IUser user in Users)
+        {
+            if (user.Username.Equals(username))
             {
                 return false;
             }
         }
 
-        Users.Add(userToAdd);
-
-        return true;
-    }
-
-    public bool UpdateUsername(IUser userToUpdate, string newUsername)
-    {
-        return true;
-    }
-
-    private bool ValidateUsername(string username)
-    {
         return true;
     }
 
     public bool SignInUser(string username, string password)
     {
-        return true;
+        foreach (IUser user in Users)
+        {
+            if (user.Username == username && user.Password == password)
+            {
+                SignedInUser = user;
+
+                return true;
+            }
+        }
+
+        return false;
     }
 
 

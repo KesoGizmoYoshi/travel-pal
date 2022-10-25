@@ -48,7 +48,7 @@
             HorizontalAlignment="Center">
             <Button
                 x:Name="btnMyDetails"
-                Content="My details"/>
+                Content="My details" Click="btnMyDetails_Click"/>
             <Button
                 x:Name="btnSignOut"
                 Content="Sign Out"/>

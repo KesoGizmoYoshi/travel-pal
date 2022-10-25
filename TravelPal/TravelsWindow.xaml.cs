@@ -21,9 +21,19 @@ namespace TravelPal
     /// </summary>
     public partial class TravelsWindow : Window
     {
+        private UserManager userManager = new();
         public TravelsWindow(UserManager userManager)
         {
             InitializeComponent();
+
+            this.userManager = userManager;
+        }
+
+        private void btnMyDetails_Click(object sender, RoutedEventArgs e)
+        {
+            UserDetailsWindow userDetailsWindow = new(userManager);
+
+            userDetailsWindow.Show();
         }
     }
 }
