@@ -47,18 +47,18 @@ namespace TravelPal
 
             bool isFoundUser = false;
 
-            foreach (IUser user in users)
-            {
-                if (user.Username == username && user.Password == password)
-                {
-                    isFoundUser = true;
+            //foreach (IUser user in users)
+            //{
+            //    if (user.Username == username && user.Password == password)
+            //    {
+            //        isFoundUser = true;
 
-                    userManager.SignedInUser = user;
+            //        userManager.SignedInUser = user;
 
-                    TravelsWindow travelsWindow = new(userManager);
-                    travelsWindow.Show();
-                }
-            }
+            //        TravelsWindow travelsWindow = new(userManager);
+            //        travelsWindow.Show();
+            //    }
+            //}
 
             if (!isFoundUser)
             {
