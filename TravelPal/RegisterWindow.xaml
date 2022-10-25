@@ -25,24 +25,34 @@
         </Grid.RowDefinitions>
         <StackPanel
             Grid.ColumnSpan="1"
-            Grid.RowSpan="3">
+            Grid.RowSpan="4">
             <Label
                 Content="TravelPal"/>
+            <Label 
+                Content ="Username"/>
             <TextBox 
                 x:Name="txtUsername"
-                Text="Username"/>
-            <TextBox 
-                x:Name="txtPassword"
-                Text="Password"/>
-            <TextBox 
-                x:Name="txtConfirmPassword"
-                Text="Confirm Password"/>
+                />
+            <Label 
+                Content="Password"/>
+            <PasswordBox 
+                x:Name="pbPassword"
+                />
+            <Label 
+                Content="Confirm Password"/>
+            <PasswordBox 
+                x:Name="pbConfirmPassword"
+                />
+            <ComboBox 
+                x:Name="cbCountries"/>
             <Label
-                x:Name="lblSignInErrorMessage"
-                Visibility="Hidden"/>
+                x:Name="lblRegisterErrorMessage"
+                Visibility="Hidden"
+                Foreground="Red"/>
             <Button
                 x:Name="btnRegister"
-                Content="Register"/>
+                Content="Register" 
+                Click="btnRegister_Click"/>
         </StackPanel>
     </Grid>
 </Window>

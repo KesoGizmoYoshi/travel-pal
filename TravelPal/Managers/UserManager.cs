@@ -22,13 +22,17 @@ public class UserManager
 
     public bool AddUser(IUser userToAdd)
     {
+        foreach(IUser user in Users)
+        {
+            if(user.Username.Equals(userToAdd.Username)) 
+            {
+                return false;
+            }
+        }
+
+        Users.Add(userToAdd);
 
         return true;
-    }
-
-    public void RemoveUser(IUser userToRemove)
-    {
-
     }
 
     public bool UpdateUsername(IUser userToUpdate, string newUsername)

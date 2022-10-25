@@ -31,6 +31,13 @@ namespace TravelPal
             InitializeComponent();
         }
 
+        public MainWindow(UserManager userManager)
+        {
+            InitializeComponent();
+
+            this.userManager = userManager;
+        }
+
         private void btnSignIn_Click(object sender, RoutedEventArgs e)
         {
             List<IUser> users = userManager.Users;
