@@ -1,2 +1,2 @@
 # travel-pal
- Individual project in the course OOP
+ Individual assignment in the course SYSM6-YSYS-OPG @ Newton Academy
