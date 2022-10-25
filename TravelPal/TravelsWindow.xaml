@@ -1,0 +1,85 @@
+﻿<Window x:Class="TravelPal.TravelsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TravelPal"
+        mc:Ignorable="d"
+        Title="TravelsWindow" Height="450" Width="800">
+    <Grid Margin="20">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+        <StackPanel
+            Grid.Column="0"
+            Grid.Row="0"
+            Grid.ColumnSpan="2"
+            Grid.RowSpan="2"
+            Orientation="Horizontal">
+            <Label
+                Content="TravelPal"
+                FontFamily="Arial"
+                FontWeight="Bold"
+                FontSize="50"/>
+        </StackPanel>
+        <StackPanel
+            Grid.Column="2"
+            Grid.Row="0"
+            Orientation="Horizontal"
+            HorizontalAlignment="Center">
+            <Label
+                Content="Welcome Username"/>
+        </StackPanel>
+        <StackPanel
+            Grid.Column="2"
+            Grid.Row="1"
+            Orientation="Horizontal"
+            HorizontalAlignment="Center">
+            <Button
+                x:Name="btnMyDetails"
+                Content="My details"/>
+            <Button
+                x:Name="btnSignOut"
+                Content="Sign Out"/>
+        </StackPanel>
+        <ListView
+            Grid.Column="0"
+            Grid.Row="2"
+            Grid.ColumnSpan="2"
+            Grid.RowSpan="2"
+            x:Name="lvTravels"/>
+        <StackPanel 
+            Grid.Column="0"
+            Grid.Row="5"
+            Grid.ColumnSpan="2"
+            Orientation="Horizontal">
+            <Button
+                x:Name="btnTravelDetails"
+                Content="Travel Details"/>
+            <Button
+                x:Name="btnAddTravel"
+                Content="Add Travel"/>
+            <Button
+                x:Name="btnRemoveTravel"
+                Content="Remove Travel"/>
+        </StackPanel>
+        <Button 
+            x:Name="btnAbout"
+            Grid.Column="2"
+            Grid.Row="3"
+            Content="About"
+            Height="20"
+            Width="50"/>
+    </Grid>
+</Window>

@@ -1,0 +1,74 @@
+﻿<Window x:Class="TravelPal.AddTravelWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TravelPal"
+        mc:Ignorable="d"
+        Title="AddTravelWindow" Height="450" Width="800">
+    <Grid Margin="20">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Label
+           Grid.ColumnSpan="2"
+           Content="TravelPal"
+           FontFamily="Arial"
+           FontWeight="Bold"
+           FontSize="40"/>
+        <StackPanel
+            Grid.Row="1"
+            Grid.RowSpan="4">
+            <Label 
+                Content="Destination"/>
+            <TextBox />
+            
+            <ComboBox />
+            <ComboBox />
+            <ComboBox />
+            <CheckBox />
+            <CalendarItem />
+
+            <Label 
+                Content="Warning"/>
+            <Button 
+                Content="Add Travel"/>
+
+        </StackPanel>
+        <StackPanel
+            Grid.Column="2"
+            Grid.Row="1"
+            Grid.RowSpan="4">
+            <Label 
+                Content="Name of the item"/>
+            <TextBox />
+            <CheckBox 
+                Content="Document"/>
+            <CheckBox 
+                Content="Required"/>
+            <Label 
+                Content="Quantity"/>
+            <TextBox
+                />
+            <Label 
+                Content="Warning"/>
+            <Button 
+                x:Name="btnAddItem"
+                Content="Add Item"/>
+            <Label 
+                Content="some text"/>
+            <ListView 
+                x:Name="lvPackingList"
+                Height="100"/>
+        </StackPanel>
+    </Grid>
+</Window>
