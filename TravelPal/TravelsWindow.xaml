@@ -39,7 +39,7 @@
             Orientation="Horizontal"
             HorizontalAlignment="Center">
             <Label
-                Content="Welcome Username"/>
+                x:Name="lblUsername"/>
         </StackPanel>
         <StackPanel
             Grid.Column="2"
@@ -48,17 +48,20 @@
             HorizontalAlignment="Center">
             <Button
                 x:Name="btnMyDetails"
-                Content="My details" Click="btnMyDetails_Click"/>
+                Content="My details" 
+                Click="btnMyDetails_Click"/>
             <Button
                 x:Name="btnSignOut"
-                Content="Sign Out"/>
+                Content="Sign Out" 
+                Click="btnSignOut_Click"/>
         </StackPanel>
         <ListView
+            x:Name="lvTravels"
             Grid.Column="0"
             Grid.Row="2"
             Grid.ColumnSpan="2"
-            Grid.RowSpan="2"
-            x:Name="lvTravels"/>
+            Grid.RowSpan="2" SelectionChanged="lvTravels_SelectionChanged"
+            />
         <StackPanel 
             Grid.Column="0"
             Grid.Row="5"
@@ -66,13 +69,13 @@
             Orientation="Horizontal">
             <Button
                 x:Name="btnTravelDetails"
-                Content="Travel Details"/>
+                Content="Travel Details" Click="btnTravelDetails_Click"/>
             <Button
                 x:Name="btnAddTravel"
                 Content="Add Travel"/>
             <Button
                 x:Name="btnRemoveTravel"
-                Content="Remove Travel"/>
+                Content="Remove Travel" Click="btnRemoveTravel_Click"/>
         </StackPanel>
         <Button 
             x:Name="btnAbout"

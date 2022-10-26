@@ -17,67 +17,67 @@ using TravelPal.Interfaces;
 using TravelPal.Managers;
 using TravelPal.Models;
 
-namespace TravelPal
+namespace TravelPal;
+
+/// <summary>
+/// Interaction logic for MainWindow.xaml
+/// </summary>
+public partial class MainWindow : Window
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
-    public partial class MainWindow : Window
+    private UserManager userManager = new();
+
+    public MainWindow()
     {
-        private UserManager userManager = new();
+        InitializeComponent();
+    }
 
-        public MainWindow()
+    public MainWindow(UserManager userManager)
+    {
+        InitializeComponent();
+
+        this.userManager = userManager;
+    }
+
+    private void btnSignIn_Click(object sender, RoutedEventArgs e)
+    {
+        List<IUser> users = userManager.Users;
+
+        string username = txtUsername.Text;
+        string password = pbPassword.Password;
+
+        bool isSignInSuccessful = userManager.SignInUser(username, password);
+
+        if (isSignInSuccessful)
         {
-            InitializeComponent();
-        }
-
-        public MainWindow(UserManager userManager)
-        {
-            InitializeComponent();
-
-            this.userManager = userManager;
-        }
-
-        private void btnSignIn_Click(object sender, RoutedEventArgs e)
-        {
-            List<IUser> users = userManager.Users;
-
-            string username = txtUsername.Text;
-            string password = pbPassword.Password;
-
-            bool isSignInSuccessful = userManager.SignInUser(username, password);
-
-            if (isSignInSuccessful)
-            {
-                TravelsWindow travelsWindow = new(userManager);
-                travelsWindow.Show();
-                Close();
-            }
-            else
-            {
-                MessageBox.Show("Username or password is incorrect", "Warning");
-            }
-
-            //foreach (IUser user in users)
-            //{
-            //    if (user.Username == username && user.Password == password)
-            //    {
-            //        isFoundUser = true;
-
-            //        userManager.SignedInUser = user;
-
-            //        TravelsWindow travelsWindow = new(userManager);
-            //        travelsWindow.Show();
-            //    }
-            //}
-
-        }
-
-        private void btnRegister_Click(object sender, RoutedEventArgs e)
-        {
-            RegisterWindow registerWindow = new(userManager);
-            registerWindow.Show();
+            TravelsWindow travelsWindow = new(userManager);
+            travelsWindow.Show();
             Close();
         }
+        else
+        {
+            // label istället
+            MessageBox.Show("Username or password is incorrect", "Warning");
+        }
+
+        //foreach (IUser user in users)
+        //{
+        //    if (user.Username == username && user.Password == password)
+        //    {
+        //        isFoundUser = true;
+
+        //        userManager.SignedInUser = user;
+
+        //        TravelsWindow travelsWindow = new(userManager);
+        //        travelsWindow.Show();
+        //    }
+        //}
+
+    }
+
+    private void btnRegister_Click(object sender, RoutedEventArgs e)
+    {
+        RegisterWindow registerWindow = new(userManager);
+        registerWindow.Show();
+        Close();
     }
 }

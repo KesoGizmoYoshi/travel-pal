@@ -12,16 +12,15 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace TravelPal
+namespace TravelPal;
+
+/// <summary>
+/// Interaction logic for AddTravelWindow.xaml
+/// </summary>
+public partial class AddTravelWindow : Window
 {
-    /// <summary>
-    /// Interaction logic for AddTravelWindow.xaml
-    /// </summary>
-    public partial class AddTravelWindow : Window
+    public AddTravelWindow()
     {
-        public AddTravelWindow()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }

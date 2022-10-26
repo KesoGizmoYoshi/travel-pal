@@ -35,15 +35,18 @@
             <Label 
                 Content="Destination"/>
             <TextBox
-                />
+                x:Name="txtDestination"
+                IsEnabled="False"/>
             <Label 
                 Content="Country"/>
             <TextBox
-                />
+                x:Name="txtCountry"
+                IsEnabled="False"/>
             <Label 
                 Content="Travelers"/>
             <TextBox
-                />
+                x:Name="txtTravelers"
+                IsEnabled="False"/>
             <ComboBox />
             <ComboBox />
             <CheckBox 

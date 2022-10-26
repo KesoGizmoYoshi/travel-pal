@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using TravelPal.Enums;
+using TravelPal.Interfaces;
 using TravelPal.Managers;
 
 namespace TravelPal
@@ -22,11 +23,15 @@ namespace TravelPal
     public partial class UserDetailsWindow : Window
     {
         private UserManager userManager = new();
-        public UserDetailsWindow(UserManager userManager)
+        private TravelsWindow travelsWindow;
+        private IUser signedInUser;
+        public UserDetailsWindow(UserManager userManager , TravelsWindow travelsWindow)
         {
             InitializeComponent();
 
             this.userManager = userManager;
+            this.travelsWindow = travelsWindow;
+            signedInUser = userManager.SignedInUser;
 
             cbCountries.ItemsSource = Enum.GetNames(typeof(Countries));
             cbCountries.Text = userManager.SignedInUser.Location.ToString();
@@ -37,16 +42,55 @@ namespace TravelPal
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             string newUsername = txtUserName.Text;
+
+            string newPassword = pbPassword.Password;
+            string newConfirmPassword = pbConfirmPassword.Password;
+
+            bool isPasswordUpdated = UpdatePassword(newPassword, newConfirmPassword);
             
             Countries newLocation = (Countries)Enum.Parse(typeof(Countries), cbCountries.SelectedItem.ToString());
-            userManager.SignedInUser.Location = newLocation;
+            signedInUser.Location = newLocation;
 
-            bool isUsernameUpdated = userManager.UpdateUsername(userManager.SignedInUser,newUsername);
+            bool isUsernameUpdated = userManager.UpdateUsername(signedInUser,newUsername);
 
             if(isUsernameUpdated)
             {
-                MessageBox.Show("Yey");
+                travelsWindow.UpdateUsernameLabel();
+                Close();
             }
+            else
+            {
+                
+            }
+
+            
         }
+
+        private bool UpdatePassword(string newPassword, string newConfirmPassword)
+        {
+            if (!string.IsNullOrEmpty(newPassword))
+            {
+                if (!(newPassword.Length < 5))
+                {
+                    if (newPassword.Equals(newConfirmPassword))
+                    {
+                        signedInUser.Password = newPassword;
+
+                        return true;
+                    }
+                    else
+                    {
+                        throw new ArgumentException("Password does not match");
+                    }
+                }
+                else
+                {
+                    throw new ArgumentException("Password must be at least 5 characters");
+                }
+            }
+
+            return false;
+        }
+
     }
 }

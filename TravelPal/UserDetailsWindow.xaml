@@ -40,10 +40,10 @@
                 Content="Username"/>
             <TextBox 
                 x:Name="txtUserName"/>
-            <ComboBox
-                x:Name="cbCountries"/>
             <Label 
                 Content="Warning"/>
+            <ComboBox
+                x:Name="cbCountries"/>
             <Label 
                 Content="Password"/>
             <PasswordBox 

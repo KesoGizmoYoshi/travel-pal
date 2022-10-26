@@ -11,17 +11,22 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using TravelPal.Managers;
+using TravelPal.Models;
 
-namespace TravelPal
+namespace TravelPal;
+
+/// <summary>
+/// Interaction logic for TravelDetailsWindow.xaml
+/// </summary>
+public partial class TravelDetailsWindow : Window
 {
-    /// <summary>
-    /// Interaction logic for TravelDetailsWindow.xaml
-    /// </summary>
-    public partial class TravelDetailsWindow : Window
+    public TravelDetailsWindow(UserManager userManager, Travel travel)
     {
-        public TravelDetailsWindow()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
+
+        txtDestination.Text = travel.Destination; 
+        //txtCountry.Text
+        //txtTravelers.Text
     }
 }
