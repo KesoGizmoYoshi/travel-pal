@@ -10,11 +10,11 @@ namespace TravelPal.Models;
 
 public class Trip : Travel
 {
-    public TripTypes Type { get; set; }
+    public TripTypes TripType { get; set; }
 
-    public Trip(string destination, Countries country, int travellers, List<PackingListItem> packingList, DateTime startDate, DateTime endDate, TripTypes type) : base(destination, country, travellers, packingList, startDate, endDate)
+    public Trip(string destination, Countries country, int travellers, List<PackingListItem> packingList, DateTime startDate, DateTime endDate, TripTypes tripType) : base(destination, country, travellers, packingList, startDate, endDate)
     {
-        Type = type;
+        TripType = tripType;
     }
 
     public override string GetInfo()

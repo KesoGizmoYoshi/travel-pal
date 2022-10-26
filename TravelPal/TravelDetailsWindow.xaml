@@ -39,18 +39,24 @@
                 IsEnabled="False"/>
             <Label 
                 Content="Country"/>
-            <TextBox
-                x:Name="txtCountry"
+            <ComboBox
+                x:Name="cbCountries"
                 IsEnabled="False"/>
             <Label 
                 Content="Travelers"/>
             <TextBox
                 x:Name="txtTravelers"
                 IsEnabled="False"/>
-            <ComboBox />
-            <ComboBox />
-            <CheckBox 
-                Content="All inclusive"/>
+            <ComboBox 
+                x:Name="cbTravelType"
+                IsEnabled="False"/>
+            <ComboBox 
+                x:Name="cbTripType"
+                IsEnabled="False"/>
+            <CheckBox
+                x:Name="chbAllInclusive"
+                Content="All inclusive"
+                IsEnabled="False"/>
 
         </StackPanel>
         <StackPanel
