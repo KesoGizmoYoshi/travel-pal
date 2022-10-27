@@ -20,6 +20,6 @@ public class OtherItem : PackingListItem
 
     public string GetInfo()
     {
-        return "";
+        return $"{Name}\t{Quantity}";
     }
 }

@@ -20,7 +20,14 @@ public class TravelDocument : PackingListItem
 
     public string GetInfo()
     {
-        return "";
+        string required = "No";
+
+        if (Required)
+        {
+            required = "Yes";
+        }
+
+        return $"{Name}\tRequired: {required}";
     }
 
 }

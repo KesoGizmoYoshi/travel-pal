@@ -30,18 +30,39 @@
             Grid.RowSpan="4">
             <Label 
                 Content="Destination"/>
-            <TextBox />
+            <TextBox 
+                x:Name="txtDestination"/>
             
-            <ComboBox />
-            <ComboBox />
-            <ComboBox />
-            <CheckBox />
-            <CalendarItem />
-
+            <ComboBox 
+                x:Name="cbCountries"/>
+            <Label 
+                Content="Travelers"/>
+            <TextBox 
+                x:Name="txtTravelers"/>
+            <ComboBox 
+                x:Name="cbTravelType" SelectionChanged="cbTravelType_SelectionChanged"/>
+            <ComboBox 
+                x:Name="cbTripType"
+                Visibility="Collapsed"/>
+            <CheckBox 
+                x:Name="chbAllInclusive"
+                Visibility="Collapsed"/>
+            <Label 
+                Content="Start Date"/>
+            <DatePicker 
+                x:Name="dpStartDate"/>
+            <Label 
+                Content="End Date"/>
+            <DatePicker 
+                x:Name="dpEndDate"/>
+            <Label
+                x:Name="lblTravelDays"
+                Content="Number of travel days: "/>
             <Label 
                 Content="Warning"/>
-            <Button 
-                Content="Add Travel"/>
+            <Button
+                x:Name="btnAddTravel"
+                Content="Add Travel" Click="btnAddTravel_Click"/>
 
         </StackPanel>
         <StackPanel
@@ -50,20 +71,29 @@
             Grid.RowSpan="4">
             <Label 
                 Content="Name of the item"/>
-            <TextBox />
-            <CheckBox 
-                Content="Document"/>
-            <CheckBox 
-                Content="Required"/>
-            <Label 
-                Content="Quantity"/>
+            <TextBox 
+                x:Name="txtNameOfTheItem"/>
+            <CheckBox
+                x:Name="chbDocument"
+                Content="Document" 
+                Checked="chbDocument_Checked"
+                Unchecked="chbDocument_Unchecked"/>
+            <CheckBox
+                x:Name="chbRequired"
+                Content="Required"
+                Visibility="Collapsed"/>
+            <Label
+                x:Name="lblQuantity"
+                Content="Quantity"
+                />
             <TextBox
+                x:Name="txtQuantity"
                 />
             <Label 
                 Content="Warning"/>
             <Button 
                 x:Name="btnAddItem"
-                Content="Add Item"/>
+                Content="Add Item" Click="btnAddItem_Click"/>
             <Label 
                 Content="some text"/>
             <ListView 

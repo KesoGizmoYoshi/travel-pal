@@ -72,7 +72,7 @@
                 Content="Travel Details" Click="btnTravelDetails_Click"/>
             <Button
                 x:Name="btnAddTravel"
-                Content="Add Travel"/>
+                Content="Add Travel" Click="btnAddTravel_Click"/>
             <Button
                 x:Name="btnRemoveTravel"
                 Content="Remove Travel" Click="btnRemoveTravel_Click"/>

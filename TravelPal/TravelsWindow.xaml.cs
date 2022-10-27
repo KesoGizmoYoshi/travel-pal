@@ -130,6 +130,13 @@ public partial class TravelsWindow : Window
 
     }
 
+    private void btnAddTravel_Click(object sender, RoutedEventArgs e)
+    {
+        AddTravelWindow addTravelWindow = new(this.userManager);
+
+        addTravelWindow.Show();
+    }
+
     private void lvTravels_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         ListViewItem selectedItem = (ListViewItem)lvTravels.SelectedItem;
