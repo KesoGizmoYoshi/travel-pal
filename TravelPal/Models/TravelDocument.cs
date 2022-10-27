@@ -7,7 +7,7 @@ using TravelPal.Interfaces;
 
 namespace TravelPal.Models;
 
-public class TravelDocument : PackingListItem
+public class TravelDocument : IPackingListItem
 {
     public string Name { get; set; }
     public bool Required { get; set; }

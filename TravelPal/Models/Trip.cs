@@ -12,7 +12,7 @@ public class Trip : Travel
 {
     public TripTypes TripType { get; set; }
 
-    public Trip(string destination, Countries country, int travellers, List<PackingListItem> packingList, DateTime startDate, DateTime endDate, TripTypes tripType) : base(destination, country, travellers, packingList, startDate, endDate)
+    public Trip(string destination, Countries country, int travellers, List<IPackingListItem> packingList, DateTime startDate, DateTime endDate, TripTypes tripType) : base(destination, country, travellers, packingList, startDate, endDate)
     {
         TripType = tripType;
     }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,7 +28,11 @@ public partial class AddTravelWindow : Window
     private TravelManager travelManager = new();
     private UserManager userManager;
 
-    private List<PackingListItem> packingList = new();
+    private List<IPackingListItem> packingList = new();
+
+    private TravelDocument travelDocument;
+ 
+
     public AddTravelWindow(UserManager userManager)
     {
         InitializeComponent();
@@ -38,37 +43,37 @@ public partial class AddTravelWindow : Window
         cbTravelType.ItemsSource = new[] { "Trip", "Vacation" };
         cbTripType.ItemsSource = Enum.GetNames(typeof(TripTypes));
 
+        
 
+    }
+
+    private void UpdateListView()
+    {
+        foreach (IPackingListItem packingListItem in packingList)
+        {
+            if (packingListItem is TravelDocument)
+            {
+                TravelDocument travelDocument = (TravelDocument)packingListItem;
+                ListViewItem item = new();
+                item.Content = travelDocument.GetInfo();
+                lvPackingList.Items.Add(item);
+            }
+        }
     }
 
     private void btnAddTravel_Click(object sender, RoutedEventArgs e)
     {
         string destination = txtDestination.Text;
-        Countries country = (Countries)Enum.Parse(typeof(Countries), cbCountries.SelectedItem.ToString());
+        //Countries country = (Countries)Enum.Parse(typeof(Countries), cbCountries.SelectedItem.ToString());
         string travelers = txtTravelers.Text;
         string travelType = cbTravelType.SelectedItem.ToString();
 
-        bool IsUserLocatedInEu = Enum.IsDefined(typeof(EuropeanCountries), userManager.SignedInUser.Location.ToString()); // true, if user live in Eu
-
-        bool IsDestinationCountryInEu = Enum.IsDefined(typeof(EuropeanCountries), country.ToString()); // true, if destination country is in EU
-
-
-
-        if (IsUserLocatedInEu && !IsDestinationCountryInEu)
+        
 
         //EuropeanCountries test = (EuropeanCountries)Enum.Parse(typeof(EuropeanCountries), userManager.SignedInUser.Location.ToString());
 
 
-        //       Om resan går till ett land utanför EU och användaren bor inom EU ska ett TravelDocument med name
-        //       “Passport” (med required satt till true) automatiskt läggas till i packlistan
-
-        //       Om resan går till ett annat land, inom EU och användaren bor inom EU, ska ett TravelDocument med
-        //       name “Passport” (med required satt till false) automatiskt läggas till i packlistan
-
-        //       Om användaren ändrar destinationsland under tiden ska required för passet ändras därefter
-
-        //       Om användaren bor utanför EU, oavsett destinationsland, ska ett pass(med required true) läggas till
-        //automatiskt
+        
 
     }
 
@@ -138,5 +143,42 @@ public partial class AddTravelWindow : Window
             cbTripType.Visibility = Visibility.Collapsed;
             chbAllInclusive.Visibility = Visibility.Visible;
         }
+    }
+
+    private void cbCountries_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        bool IsUserLocatedInEu = Enum.IsDefined(typeof(EuropeanCountries), userManager.SignedInUser.Location.ToString()); // true, if user live in Eu
+
+        bool IsDestinationCountryInEu = Enum.IsDefined(typeof(EuropeanCountries), cbCountries.SelectedItem.ToString()); // true, if destination country is in EU
+
+        bool isRequired;
+
+        if (IsUserLocatedInEu && !IsDestinationCountryInEu)
+        {
+            isRequired = true;
+        }
+        else if (IsUserLocatedInEu && IsDestinationCountryInEu)
+        {
+            isRequired = false;
+        }
+        else
+        {
+            isRequired = true;
+        }
+
+        if (lvPackingList.Items.Count == 0)
+        {
+            travelDocument = new("Passport", isRequired);
+            packingList.Add(travelDocument);
+        }
+        else
+        {
+            travelDocument.Required = isRequired;
+            lvPackingList.Items.Clear();
+        }
+
+        UpdateListView();
+      Om användaren ändrar destinationsland under tiden ska required för passet ändras därefter
+
     }
 }

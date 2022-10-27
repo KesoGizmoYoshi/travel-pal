@@ -23,7 +23,7 @@ public class UserManager
 
         OtherItem otherItem = new("Toothbrush", 2);
 
-        List<PackingListItem> packingList = new();
+        List<IPackingListItem> packingList = new();
 
         packingList.Add(otherItem);
 

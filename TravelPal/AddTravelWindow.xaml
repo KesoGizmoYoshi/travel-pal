@@ -34,7 +34,8 @@
                 x:Name="txtDestination"/>
             
             <ComboBox 
-                x:Name="cbCountries"/>
+                x:Name="cbCountries" 
+                SelectionChanged="cbCountries_SelectionChanged"/>
             <Label 
                 Content="Travelers"/>
             <TextBox 
