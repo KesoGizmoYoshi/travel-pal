@@ -29,9 +29,7 @@ public partial class AddTravelWindow : Window
     private UserManager userManager;
 
     private List<IPackingListItem> packingList = new();
-
     private TravelDocument travelDocument;
- 
 
     public AddTravelWindow(UserManager userManager)
     {
@@ -39,42 +37,60 @@ public partial class AddTravelWindow : Window
 
         this.userManager = userManager;
 
-        cbCountries.ItemsSource = Enum.GetNames(typeof(Countries));
-        cbTravelType.ItemsSource = new[] { "Trip", "Vacation" };
-        cbTripType.ItemsSource = Enum.GetNames(typeof(TripTypes));
-
-        
+        PopulateAllComboBoxes();
 
     }
 
-    private void UpdateListView()
+    private void PopulateAllComboBoxes()
     {
-        foreach (IPackingListItem packingListItem in packingList)
-        {
-            if (packingListItem is TravelDocument)
-            {
-                TravelDocument travelDocument = (TravelDocument)packingListItem;
-                ListViewItem item = new();
-                item.Content = travelDocument.GetInfo();
-                lvPackingList.Items.Add(item);
-            }
-        }
+        cbCountries.ItemsSource = Enum.GetNames(typeof(Countries));
+        cbTravelType.ItemsSource = new[] { "Trip", "Vacation" };
+        cbTripType.ItemsSource = Enum.GetNames(typeof(TripTypes));
     }
 
     private void btnAddTravel_Click(object sender, RoutedEventArgs e)
     {
         string destination = txtDestination.Text;
-        //Countries country = (Countries)Enum.Parse(typeof(Countries), cbCountries.SelectedItem.ToString());
-        string travelers = txtTravelers.Text;
+        Countries country = (Countries)Enum.Parse(typeof(Countries), cbCountries.SelectedItem.ToString());
+        string strTravelers = txtTravelers.Text;
         string travelType = cbTravelType.SelectedItem.ToString();
 
+        int travelers = Convert.ToInt32(strTravelers);
+
+        DateTime startDate = (DateTime)datePickerStartDate.SelectedDate;
+        DateTime endDate = (DateTime)datePickerEndDate.SelectedDate;
+
+        int travelDays = (int)(endDate - startDate).TotalDays;
+
         
 
-        //EuropeanCountries test = (EuropeanCountries)Enum.Parse(typeof(EuropeanCountries), userManager.SignedInUser.Location.ToString());
+        if (travelType.Equals("Trip"))
+        {
+            TripTypes tripType = (TripTypes)Enum.Parse(typeof(TripTypes),cbTripType.SelectedItem.ToString());
 
+            Trip trip = new(destination, country, travelers, packingList, startDate, endDate, tripType);
 
-        
+            if (userManager.SignedInUser is User)
+            {
+                User signedInUser = (User)userManager.SignedInUser;
 
+                signedInUser.Travels.Add(trip);
+            }
+
+        }
+        else if (travelType.Equals("Vacation"))
+        {
+            bool isAllInclusive = (bool)chbAllInclusive.IsChecked;
+
+            Vacation vacation = new(destination, country, travelers, packingList, startDate, endDate, isAllInclusive);
+
+            if (userManager.SignedInUser is User)
+            {
+                User signedInUser = (User)userManager.SignedInUser;
+
+                signedInUser.Travels.Add(vacation);
+            }
+        }
     }
 
     private void btnAddItem_Click(object sender, RoutedEventArgs e)
@@ -92,8 +108,6 @@ public partial class AddTravelWindow : Window
             TravelDocument travelDocument = new(name, isRequired);
 
             packingList.Add(travelDocument);
-            lvPackingList.Items.Add(travelDocument.GetInfo());
-
         }
         else if(chbDocument.IsChecked is false)
         {
@@ -102,8 +116,9 @@ public partial class AddTravelWindow : Window
             OtherItem otherItem = new(name, quantity);
 
             packingList.Add(otherItem);
-            lvPackingList.Items.Add(otherItem.GetInfo());
         }
+
+        UpdateListView();
 
         txtNameOfTheItem.Clear();
         txtQuantity.Clear();
@@ -148,7 +163,6 @@ public partial class AddTravelWindow : Window
     private void cbCountries_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         bool IsUserLocatedInEu = Enum.IsDefined(typeof(EuropeanCountries), userManager.SignedInUser.Location.ToString()); // true, if user live in Eu
-
         bool IsDestinationCountryInEu = Enum.IsDefined(typeof(EuropeanCountries), cbCountries.SelectedItem.ToString()); // true, if destination country is in EU
 
         bool isRequired;
@@ -174,11 +188,46 @@ public partial class AddTravelWindow : Window
         else
         {
             travelDocument.Required = isRequired;
-            lvPackingList.Items.Clear();
         }
 
         UpdateListView();
-      Om användaren ändrar destinationsland under tiden ska required för passet ändras därefter
+    }
 
+    private void UpdateListView()
+    {
+        lvPackingList.Items.Clear();
+
+        foreach (IPackingListItem packingListItem in packingList)
+        {
+            if (packingListItem is TravelDocument)
+            {
+                TravelDocument travelDocument = (TravelDocument)packingListItem;
+                ListViewItem item = new();
+                item.Content = travelDocument.GetInfo();
+                lvPackingList.Items.Add(item);
+            }
+            else if (packingListItem is OtherItem)
+            {
+                OtherItem otherItem = (OtherItem)packingListItem;
+                ListViewItem item = new();
+                item.Content = otherItem.GetInfo();
+                lvPackingList.Items.Add(item);
+            }
+        }
+    }
+
+    private void datePickerStartDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+    {
+
+    }
+
+    private void datePickerEndDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+    {
+        DateTime startDate = (DateTime)datePickerStartDate.SelectedDate;
+        DateTime endDate = (DateTime)datePickerEndDate.SelectedDate;
+
+        int travelDays = (int)(endDate - startDate).TotalDays;
+
+        lblTravelDays.Content += travelDays.ToString();
     }
 }

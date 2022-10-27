@@ -61,9 +61,7 @@ namespace TravelPal
             else
             {
                 
-            }
-
-            
+            }  
         }
 
         private bool UpdatePassword(string newPassword, string newConfirmPassword)

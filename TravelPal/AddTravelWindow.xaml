@@ -34,28 +34,41 @@
                 x:Name="txtDestination"/>
             
             <ComboBox 
-                x:Name="cbCountries" 
+                x:Name="cbCountries"
+                IsEditable="True" 
+                IsReadOnly="True"
+                Text="Select Country"
                 SelectionChanged="cbCountries_SelectionChanged"/>
             <Label 
                 Content="Travelers"/>
             <TextBox 
                 x:Name="txtTravelers"/>
             <ComboBox 
-                x:Name="cbTravelType" SelectionChanged="cbTravelType_SelectionChanged"/>
+                x:Name="cbTravelType"
+                IsEditable="True" 
+                IsReadOnly="True"
+                Text="Select Travel Type"
+                SelectionChanged="cbTravelType_SelectionChanged"/>
             <ComboBox 
                 x:Name="cbTripType"
+                IsEditable="True" 
+                IsReadOnly="True"
+                Text="Select Trip Type"
                 Visibility="Collapsed"/>
             <CheckBox 
                 x:Name="chbAllInclusive"
+                Content="All Inclusive"
                 Visibility="Collapsed"/>
             <Label 
                 Content="Start Date"/>
             <DatePicker 
-                x:Name="dpStartDate"/>
+                x:Name="datePickerStartDate"
+                SelectedDateChanged="datePickerStartDate_SelectedDateChanged"/>
             <Label 
                 Content="End Date"/>
             <DatePicker 
-                x:Name="dpEndDate"/>
+                x:Name="datePickerEndDate"
+                SelectedDateChanged="datePickerEndDate_SelectedDateChanged"/>
             <Label
                 x:Name="lblTravelDays"
                 Content="Number of travel days: "/>

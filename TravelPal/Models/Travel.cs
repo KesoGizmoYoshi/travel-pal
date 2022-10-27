@@ -37,6 +37,6 @@ public class Travel
 
     private int CalculateTravelDays()
     {
-        return 0;
+        return (int)(EndDate - StartDate).TotalDays; ;
     }
 }
