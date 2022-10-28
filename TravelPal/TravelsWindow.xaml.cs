@@ -72,13 +72,6 @@ public partial class TravelsWindow : Window
                     }
                 }  
             }
-            //foreach (Travel travel in travelManager.Travels)
-            //{
-            //    ListViewItem item = new();
-            //    item.Tag = travel;
-            //    item.Content = travel.GetInfo();
-            //    lvTravels.Items.Add(item);
-            //}
         }
     }
 

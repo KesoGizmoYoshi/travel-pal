@@ -44,7 +44,10 @@
                 x:Name="pbConfirmPassword"
                 />
             <ComboBox 
-                x:Name="cbCountries"/>
+                x:Name="cbLocation"
+                IsEditable="True" 
+                IsReadOnly="True"
+                Text="Select Location" />
             <Label
                 x:Name="lblRegisterErrorMessage"
                 Visibility="Hidden"

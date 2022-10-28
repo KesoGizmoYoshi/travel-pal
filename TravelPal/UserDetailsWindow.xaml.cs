@@ -15,80 +15,109 @@ using TravelPal.Enums;
 using TravelPal.Interfaces;
 using TravelPal.Managers;
 
-namespace TravelPal
+namespace TravelPal;
+
+/// <summary>
+/// Interaction logic for UserDetailsWindow.xaml
+/// </summary>
+public partial class UserDetailsWindow : Window
 {
-    /// <summary>
-    /// Interaction logic for UserDetailsWindow.xaml
-    /// </summary>
-    public partial class UserDetailsWindow : Window
+    private UserManager userManager = new();
+    private TravelsWindow travelsWindow;
+    private IUser signedInUser;
+    public UserDetailsWindow(UserManager userManager, TravelsWindow travelsWindow)
     {
-        private UserManager userManager = new();
-        private TravelsWindow travelsWindow;
-        private IUser signedInUser;
-        public UserDetailsWindow(UserManager userManager , TravelsWindow travelsWindow)
+        InitializeComponent();
+
+        this.userManager = userManager;
+        this.travelsWindow = travelsWindow;
+
+        signedInUser = this.userManager.SignedInUser;
+
+        txtUserName.Text = userManager.SignedInUser.Username;
+
+        cbCountries.ItemsSource = Enum.GetNames(typeof(Countries));
+        cbCountries.Text = userManager.SignedInUser.Location.ToString();
+    }
+
+    private void btnSave_Click(object sender, RoutedEventArgs e)
+    {
+        string newUsername = txtUserName.Text;
+        string newPassword = pbPassword.Password;
+        string newConfirmPassword = pbConfirmPassword.Password;
+
+
+
+        Countries newLocation = (Countries)Enum.Parse(typeof(Countries), cbCountries.SelectedItem.ToString());
+        signedInUser.Location = newLocation;
+
+        try
         {
-            InitializeComponent();
-
-            this.userManager = userManager;
-            this.travelsWindow = travelsWindow;
-            signedInUser = userManager.SignedInUser;
-
-            cbCountries.ItemsSource = Enum.GetNames(typeof(Countries));
-            cbCountries.Text = userManager.SignedInUser.Location.ToString();
-
-            txtUserName.Text = userManager.SignedInUser.Username;
-        }
-
-        private void btnSave_Click(object sender, RoutedEventArgs e)
-        {
-            string newUsername = txtUserName.Text;
-
-            string newPassword = pbPassword.Password;
-            string newConfirmPassword = pbConfirmPassword.Password;
-
-            bool isPasswordUpdated = UpdatePassword(newPassword, newConfirmPassword);
-            
-            Countries newLocation = (Countries)Enum.Parse(typeof(Countries), cbCountries.SelectedItem.ToString());
-            signedInUser.Location = newLocation;
-
-            bool isUsernameUpdated = userManager.UpdateUsername(signedInUser,newUsername);
-
-            if(isUsernameUpdated)
+            if(!signedInUser.Username.Equals(newUsername))
             {
-                travelsWindow.UpdateUsernameLabel();
-                Close();
-            }
-            else
-            {
-                
-            }  
-        }
-
-        private bool UpdatePassword(string newPassword, string newConfirmPassword)
-        {
-            if (!string.IsNullOrEmpty(newPassword))
-            {
-                if (!(newPassword.Length < 5))
+                if (newUsername.Length < 3)
                 {
-                    if (newPassword.Equals(newConfirmPassword))
-                    {
-                        signedInUser.Password = newPassword;
-
-                        return true;
-                    }
-                    else
-                    {
-                        throw new ArgumentException("Password does not match");
-                    }
+                    throw new ArgumentException("Username most be 3 or more characters.");
                 }
                 else
                 {
-                    throw new ArgumentException("Password must be at least 5 characters");
+                    bool isUsernameUpdated = userManager.UpdateUsername(signedInUser, newUsername);
+
+                    if (isUsernameUpdated)
+                    {
+                        travelsWindow.UpdateUsernameLabel();
+                        Close();
+                    }
+                    else
+                    {
+                        throw new ArgumentException("Username does already exist.");
+                    }
                 }
             }
 
-            return false;
+            if (!string.IsNullOrWhiteSpace(newPassword))
+            {
+                bool isPasswordUpdated = UpdatePassword(newPassword, newConfirmPassword);
+
+                if (isPasswordUpdated)
+                {
+                    Close();
+                }
+            }
         }
 
+        catch (ArgumentException ex)
+        {
+            lblErrorMessage.Content = ex.Message;
+            lblErrorMessage.Visibility = Visibility.Visible;
+        }
+    }
+
+    private bool UpdatePassword(string newPassword, string newConfirmPassword)
+    {
+        if (newPassword.Length > 4)
+        {
+            if (newPassword.Equals(newConfirmPassword))
+            {
+                signedInUser.Password = newPassword;
+
+                return true;
+            }
+            else
+            {
+                throw new ArgumentException("Password does not match.");
+            }
+        }
+        else
+        {
+            throw new ArgumentException("Password must be at least 5 characters.");
+        }
+
+
+    }
+
+    private void btnCancel_Click(object sender, RoutedEventArgs e)
+    {
+        Close();
     }
 }

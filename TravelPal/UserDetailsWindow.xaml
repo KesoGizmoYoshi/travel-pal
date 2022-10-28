@@ -40,8 +40,6 @@
                 Content="Username"/>
             <TextBox 
                 x:Name="txtUserName"/>
-            <Label 
-                Content="Warning"/>
             <ComboBox
                 x:Name="cbCountries"/>
             <Label 
@@ -53,14 +51,16 @@
             <PasswordBox 
                 x:Name="pbConfirmPassword"/>
             <Label 
-                Content="Warning"/>
+                x:Name="lblErrorMessage"
+                Visibility="Collapsed"
+                Foreground="Red"
+                FontWeight="Bold"/>
         </StackPanel>
         <Button
             Grid.Column="0"
             Grid.Row="6"
-            
             x:Name="btnCancel"
-            Content="Cancel"/>
+            Content="Cancel" Click="btnCancel_Click"/>
         <Button
             Grid.Column="1"
             Grid.Row="6"

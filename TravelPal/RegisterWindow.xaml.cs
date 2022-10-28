@@ -30,26 +30,26 @@ public partial class RegisterWindow : Window
 
         this.userManager = userManager;
 
-        cbCountries.ItemsSource = Enum.GetNames(typeof(Countries));
+        cbLocation.ItemsSource = Enum.GetNames(typeof(Countries));
     }
 
     private void btnRegister_Click(object sender, RoutedEventArgs e)
     {
-        string username = txtUsername.Text;
-        string password = pbPassword.Password;
-        string confirmPassword = pbConfirmPassword.Password;
-        string selectedLocation = cbCountries.SelectedItem.ToString();
 
         try
         {
+            string username = txtUsername.Text;
+            string password = pbPassword.Password;
+            string confirmPassword = pbConfirmPassword.Password;
+            string selectedLocation = (string)cbLocation.SelectedItem;
 
             if (string.IsNullOrEmpty(username))
             {
-                throw new ArgumentException("Type in a usernam");
+                throw new ArgumentException("Type in a username");
             }
             else if(username.Length < 3)
             {
-                throw new ArgumentException("Atleast 3 chars");
+                throw new ArgumentException("At least 3 chars");
             }
             else if (string.IsNullOrEmpty(password) || string.IsNullOrEmpty(confirmPassword)) 
             {
@@ -59,7 +59,7 @@ public partial class RegisterWindow : Window
             {
                 throw new ArgumentException("Password is not matching");
             }
-            else if(string.IsNullOrEmpty(selectedLocation))
+            else if(selectedLocation is null)
             {
                 throw new ArgumentException("No location selected");
             }
@@ -86,5 +86,12 @@ public partial class RegisterWindow : Window
             lblRegisterErrorMessage.Visibility = Visibility.Visible;
             lblRegisterErrorMessage.Content = ex.Message;
         }
+        catch (NullReferenceException ex)
+        {
+            lblRegisterErrorMessage.Visibility = Visibility.Visible;
+            lblRegisterErrorMessage.Content = ex.Message;
+        }
     }
+
+
 }

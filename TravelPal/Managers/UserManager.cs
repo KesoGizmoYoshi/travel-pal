@@ -17,7 +17,7 @@ public class UserManager
 
     public UserManager()
     {
-        Admin admin = new("Admin", "password", Enums.Countries.Antarctica);
+        Admin admin = new("admin", "password", Enums.Countries.Antarctica);
         
         User Gandalf = new("Gandalf", "password", Enums.Countries.Sweden);
 

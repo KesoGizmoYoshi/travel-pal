@@ -74,9 +74,12 @@ public partial class AddTravelWindow : Window
             {
                 User signedInUser = (User)userManager.SignedInUser;
 
-                signedInUser.Travels.Add(trip);
-            }
+                //signedInUser.Travels.Add(trip);
 
+                travelManager.AddTravel(trip);
+
+                signedInUser.Travels.AddRange(travelManager.Travels);
+            }
         }
         else if (travelType.Equals("Vacation"))
         {
@@ -88,7 +91,9 @@ public partial class AddTravelWindow : Window
             {
                 User signedInUser = (User)userManager.SignedInUser;
 
-                signedInUser.Travels.Add(vacation);
+                travelManager.AddTravel(vacation);
+
+                signedInUser.Travels.AddRange(travelManager.Travels);
             }
         }
     }
@@ -148,6 +153,7 @@ public partial class AddTravelWindow : Window
 
     private void cbTravelType_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
+
         if(cbTravelType.SelectedItem.ToString().Equals("Trip"))
         {
             cbTripType.Visibility = Visibility.Visible;
@@ -163,7 +169,7 @@ public partial class AddTravelWindow : Window
     private void cbCountries_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         bool IsUserLocatedInEu = Enum.IsDefined(typeof(EuropeanCountries), userManager.SignedInUser.Location.ToString()); // true, if user live in Eu
-        bool IsDestinationCountryInEu = Enum.IsDefined(typeof(EuropeanCountries), cbCountries.SelectedItem.ToString()); // true, if destination country is in EU
+        bool IsDestinationCountryInEu = Enum.IsDefined(typeof(EuropeanCountries), cbCountries.SelectedItem); // true, if destination country is in EU
 
         bool isRequired;
 

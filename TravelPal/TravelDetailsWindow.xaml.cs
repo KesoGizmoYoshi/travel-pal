@@ -37,12 +37,18 @@ public partial class TravelDetailsWindow : Window
 
         cbTripType.ItemsSource = Enum.GetNames(typeof(TripTypes));
 
+        datePickerStartDate.Text = travel.StartDate.ToString();
+        datePickerEndDate.Text = travel.EndDate.ToString();
+
+        lblTravelDays.Content = $"Number of travel days: {travel.TravelDays}";
+
         if (travel is Trip)
         {
             Trip trip = (Trip)travel;
 
             cbTravelType.Text = "Trip";
             cbTripType.Text = trip.TripType.ToString();
+            chbAllInclusive.Visibility = Visibility.Collapsed;
 
         }
         else if (travel is Vacation)
@@ -55,6 +61,8 @@ public partial class TravelDetailsWindow : Window
             {
                 chbAllInclusive.IsChecked = true;
             }
+
+            cbTripType.Visibility = Visibility.Collapsed; 
         }
 
     }

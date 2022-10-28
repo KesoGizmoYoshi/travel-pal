@@ -57,18 +57,19 @@
                 x:Name="chbAllInclusive"
                 Content="All inclusive"
                 IsEnabled="False"/>
+            <Label 
+                Content="Start Date"/>
+            <DatePicker 
+                x:Name="datePickerStartDate"
+                IsEnabled="False"/>
+            <Label 
+                Content="End Date"/>
+            <DatePicker 
+                x:Name="datePickerEndDate"
+                IsEnabled="False"/>
+            <Label 
+                x:Name="lblTravelDays"/>
 
-        </StackPanel>
-        <StackPanel
-            Grid.Column="2"
-            Grid.ColumnSpan="3"
-            Grid.RowSpan="2"
-            Orientation="Horizontal"
-            HorizontalAlignment="Left">
-            <CalendarItem 
-                x:Name="cldStartDate"/>
-            <CalendarItem 
-                x:Name="cldEndDate"/>
         </StackPanel>
         <StackPanel
             Grid.Column="2"
