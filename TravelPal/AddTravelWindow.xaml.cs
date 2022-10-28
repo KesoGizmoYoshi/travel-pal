@@ -55,7 +55,7 @@ public partial class AddTravelWindow : Window
         string strTravelers = txtTravelers.Text;
         string travelType = cbTravelType.SelectedItem.ToString();
 
-        int travelers = Convert.ToInt32(strTravelers);
+        int travellers = Convert.ToInt32(strTravelers);
 
         DateTime startDate = (DateTime)datePickerStartDate.SelectedDate;
         DateTime endDate = (DateTime)datePickerEndDate.SelectedDate;
@@ -68,7 +68,7 @@ public partial class AddTravelWindow : Window
         {
             TripTypes tripType = (TripTypes)Enum.Parse(typeof(TripTypes),cbTripType.SelectedItem.ToString());
 
-            Trip trip = new(destination, country, travelers, packingList, startDate, endDate, tripType);
+            //Trip trip = new(destination, country, travelers, packingList, startDate, endDate, tripType);
 
             if (userManager.SignedInUser is User)
             {
@@ -76,7 +76,7 @@ public partial class AddTravelWindow : Window
 
                 //signedInUser.Travels.Add(trip);
 
-                travelManager.AddTravel(trip);
+                travelManager.AddTravel(destination, country, travellers, packingList, startDate, endDate, tripType);
 
                 signedInUser.Travels.AddRange(travelManager.Travels);
             }
@@ -85,15 +85,18 @@ public partial class AddTravelWindow : Window
         {
             bool isAllInclusive = (bool)chbAllInclusive.IsChecked;
 
-            Vacation vacation = new(destination, country, travelers, packingList, startDate, endDate, isAllInclusive);
+            //Vacation vacation = new(destination, country, travelers, packingList, startDate, endDate, isAllInclusive);
 
             if (userManager.SignedInUser is User)
             {
                 User signedInUser = (User)userManager.SignedInUser;
 
-                travelManager.AddTravel(vacation);
+                Travel travelAddedtoTheMainList = travelManager.AddTravel(destination, country, travellers, packingList, startDate, endDate, isAllInclusive);
 
-                signedInUser.Travels.AddRange(travelManager.Travels);
+
+                //signedInUser.Travels.Add(travelManager.AddTravel(destination, country, travellers, packingList, startDate, endDate, isAllInclusive));
+
+                //signedInUser.Travels.AddRange(travelManager.Travels);
             }
         }
     }
