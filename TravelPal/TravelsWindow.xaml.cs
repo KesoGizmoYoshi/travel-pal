@@ -23,8 +23,8 @@ namespace TravelPal;
 /// </summary>
 public partial class TravelsWindow : Window
 {
-    private UserManager userManager = new();
-    private TravelManager travelManager = new();
+    private UserManager userManager;
+    private TravelManager travelManager;
     private Travel selectedTravel;
     
 

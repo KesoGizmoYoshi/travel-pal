@@ -52,7 +52,7 @@ public partial class MainWindow : Window
         List<IUser> users = userManager.Users;
 
         string username = txtUsername.Text;
-        string password = pbPassword.Password;
+        string password = pwPassword.Password;
 
         bool isSignInSuccessful = userManager.SignInUser(username, password);
 
@@ -64,8 +64,7 @@ public partial class MainWindow : Window
         }
         else
         {
-            // label istället
-            MessageBox.Show("Username or password is incorrect", "Warning");
+            lblSignInErrorMessage.Content = "Username or password is incorrect";
         }
     }
 

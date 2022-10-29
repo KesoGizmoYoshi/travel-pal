@@ -22,7 +22,7 @@ namespace TravelPal;
 /// </summary>
 public partial class UserDetailsWindow : Window
 {
-    private UserManager userManager = new();
+    private UserManager userManager;
     private TravelsWindow travelsWindow;
     private IUser signedInUser;
     public UserDetailsWindow(UserManager userManager, TravelsWindow travelsWindow)

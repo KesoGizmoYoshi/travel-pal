@@ -5,8 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TravelPal"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Background="MintCream" Height="450" Width="800">
     <Grid Margin="20">
+        <Grid.Background>
+            <ImageBrush ImageSource="/Images/background2.png" Stretch="None" Opacity="0.3"/>
+        </Grid.Background>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
@@ -14,7 +17,6 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
-
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -36,36 +38,63 @@
                 FontFamily="Arial"
                 FontWeight="Bold"
                 FontSize="50"
-                HorizontalAlignment="Center"/>
+                Foreground="MediumSlateBlue"
+                HorizontalAlignment="Center"
+                Margin="0,-10,0,0"/>
             <Label 
                 Content="Username"
-                HorizontalAlignment="Center"/>
+                Foreground="MediumSlateBlue"
+                HorizontalAlignment="Center"
+                FontSize="16"
+                FontWeight="SemiBold"/>
             <TextBox
                 x:Name="txtUsername"
-                />
+                Width="200"
+                Foreground="MediumSlateBlue"
+                Background="MintCream"
+                BorderBrush="MediumSlateBlue"
+                BorderThickness="2"/>
             <Label 
                 Content="Password"
-                HorizontalAlignment="Center"/>
+                Foreground="MediumSlateBlue"
+                HorizontalAlignment="Center"
+                FontSize="16"
+                FontWeight="SemiBold"/>
             <PasswordBox 
-                x:Name="pbPassword"
-                />
+                x:Name="pwPassword"
+                Width="200"
+                Foreground="MediumSlateBlue"
+                Background="MintCream"
+                BorderBrush="MediumSlateBlue"
+                BorderThickness="2"/>
             <Label
-                Grid.Column="0"
-                Grid.Row="3"
                 x:Name="lblSignInErrorMessage"
-                />
+                Content=""
+                HorizontalAlignment="Center"
+                FontSize="12"
+                FontWeight="SemiBold"
+                Foreground="MediumVioletRed"/>
             <Button
-                Grid.Column="0"
-                Grid.Row="4"
                 x:Name="btnSignIn"
+                Width="200"
                 Content="Sign In"
-                
+                Foreground="MintCream"
+                Background="MediumSlateBlue"
+                BorderBrush="MediumSlateBlue"
+                FontSize="16"
+                FontWeight="SemiBold"
                 Click="btnSignIn_Click"/>
             <Button
-                Grid.Column="0"
-                Grid.Row="5"
+                Width="200"
                 x:Name="btnRegister"
-                Content="Register" Click="btnRegister_Click"/>
+                Content="Register"
+                Foreground="MintCream"
+                Background="MediumSlateBlue"
+                BorderBrush="MediumSlateBlue"
+                FontSize="16"
+                FontWeight="SemiBold"
+                Margin="10"
+                Click="btnRegister_Click"/>
         </StackPanel>
     </Grid>
 </Window>

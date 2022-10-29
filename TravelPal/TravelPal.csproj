@@ -11,4 +11,18 @@
     <Compile Remove="Managers\PackingListManager.cs" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="Images\background.png" />
+    <None Remove="Images\background2.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\background.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\background2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+
 </Project>
