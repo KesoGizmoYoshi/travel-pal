@@ -25,17 +25,18 @@ namespace TravelPal;
 /// </summary>
 public partial class AddTravelWindow : Window
 {
-    private TravelManager travelManager = new();
+    private TravelManager travelManager;
     private UserManager userManager;
 
     private List<IPackingListItem> packingList = new();
     private TravelDocument travelDocument;
 
-    public AddTravelWindow(UserManager userManager)
+    public AddTravelWindow(UserManager userManager, TravelManager travelManager)
     {
         InitializeComponent();
 
         this.userManager = userManager;
+        this.travelManager = travelManager;
 
         PopulateAllComboBoxes();
 

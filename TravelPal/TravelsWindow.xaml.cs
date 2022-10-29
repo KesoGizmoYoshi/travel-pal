@@ -28,16 +28,15 @@ public partial class TravelsWindow : Window
     private Travel selectedTravel;
     
 
-    public TravelsWindow(UserManager userManager)
+    public TravelsWindow(UserManager userManager, TravelManager travelManager)
     {
         InitializeComponent();
 
         this.userManager = userManager;
+        this.travelManager = travelManager;
 
         UpdateUsernameLabel();
-        DisplayTravels();
-
-        
+        DisplayTravels();    
     }
 
     private void DisplayTravels()
@@ -90,7 +89,7 @@ public partial class TravelsWindow : Window
     private void btnSignOut_Click(object sender, RoutedEventArgs e)
     {
         this.userManager.SignedInUser = null;
-        MainWindow mainWindow = new MainWindow(this.userManager);
+        MainWindow mainWindow = new MainWindow(this.userManager, this.travelManager);
         mainWindow.Show();
         Close();
     }
@@ -99,7 +98,7 @@ public partial class TravelsWindow : Window
     {
         if (selectedTravel != null)
         {
-            TravelDetailsWindow travelDetailsWindow = new(this.userManager, selectedTravel);
+            TravelDetailsWindow travelDetailsWindow = new(this.userManager, this.travelManager, selectedTravel);
 
             travelDetailsWindow.Show();
         }
@@ -125,7 +124,7 @@ public partial class TravelsWindow : Window
 
     private void btnAddTravel_Click(object sender, RoutedEventArgs e)
     {
-        AddTravelWindow addTravelWindow = new(this.userManager);
+        AddTravelWindow addTravelWindow = new(this.userManager, this.travelManager);
 
         addTravelWindow.Show();
     }

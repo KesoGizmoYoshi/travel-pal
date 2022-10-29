@@ -46,11 +46,14 @@ public class TravelManager
 
 // TODO
 //
-// add methods, one for adding a trip and one for adding a vacation
 //
 // Displaya hela listan för Admin och men spara även travels borttagna av användaren i huvudlistan, bool isDeleted to ha koll
 //
 
-// USe the same travelManager every where!!!!!!
+
+
+// USe the same travelManager every where!!!!!! maybe change privat field variable to public property, OR create a travelManager-object in MainWindow
+
+// Add public method to calculate travelDays for displaying in the AddTravelWindows
 
 

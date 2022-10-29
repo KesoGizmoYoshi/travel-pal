@@ -22,7 +22,7 @@ namespace TravelPal;
 /// </summary>
 public partial class TravelDetailsWindow : Window
 {
-    public TravelDetailsWindow(UserManager userManager, Travel travel)
+    public TravelDetailsWindow(UserManager userManager, TravelManager travelManager, Travel travel)
     {
         InitializeComponent();
 

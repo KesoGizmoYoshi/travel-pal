@@ -25,6 +25,7 @@ namespace TravelPal;
 public partial class MainWindow : Window
 {
     private UserManager userManager = new();
+    private TravelManager travelManager = new();
 
     public MainWindow()
     {
@@ -38,6 +39,14 @@ public partial class MainWindow : Window
         this.userManager = userManager;
     }
 
+    public MainWindow(UserManager userManager, TravelManager travelManager)
+    {
+        InitializeComponent();
+
+        this.userManager = userManager;
+        this.travelManager = travelManager;
+    }
+
     private void btnSignIn_Click(object sender, RoutedEventArgs e)
     {
         List<IUser> users = userManager.Users;
@@ -49,7 +58,7 @@ public partial class MainWindow : Window
 
         if (isSignInSuccessful)
         {
-            TravelsWindow travelsWindow = new(userManager);
+            TravelsWindow travelsWindow = new(userManager, travelManager);
             travelsWindow.Show();
             Close();
         }
@@ -58,20 +67,6 @@ public partial class MainWindow : Window
             // label istället
             MessageBox.Show("Username or password is incorrect", "Warning");
         }
-
-        //foreach (IUser user in users)
-        //{
-        //    if (user.Username == username && user.Password == password)
-        //    {
-        //        isFoundUser = true;
-
-        //        userManager.SignedInUser = user;
-
-        //        TravelsWindow travelsWindow = new(userManager);
-        //        travelsWindow.Show();
-        //    }
-        //}
-
     }
 
     private void btnRegister_Click(object sender, RoutedEventArgs e)
