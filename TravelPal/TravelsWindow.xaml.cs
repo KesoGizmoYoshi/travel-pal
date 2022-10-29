@@ -26,6 +26,7 @@ public partial class TravelsWindow : Window
     private UserManager userManager;
     private TravelManager travelManager;
     private Travel selectedTravel;
+    private IUser signedInUser;
     
 
     public TravelsWindow(UserManager userManager, TravelManager travelManager)
@@ -34,6 +35,7 @@ public partial class TravelsWindow : Window
 
         this.userManager = userManager;
         this.travelManager = travelManager;
+        signedInUser = this.userManager.SignedInUser;
 
         UpdateUsernameLabel();
         DisplayTravels();    
@@ -41,6 +43,8 @@ public partial class TravelsWindow : Window
 
     private void DisplayTravels()
     {
+        lvTravels.Items.Clear();
+
         if (userManager.SignedInUser is User)
         {
             User signedInUser = (User)userManager.SignedInUser;
@@ -53,23 +57,14 @@ public partial class TravelsWindow : Window
                 lvTravels.Items.Add(item);
             }
         }
-
-        else if (userManager.SignedInUser.IsAdmin)
+        else if (signedInUser.IsAdmin)
         {
-            foreach(IUser iUser in userManager.Users)
+            foreach (Travel travel in travelManager.Travels)
             {
-                if(iUser is User)
-                {
-                    User user = (User)iUser;
-
-                    foreach (Travel travel in user.Travels)
-                    {
-                        ListViewItem item = new();
-                        item.Tag = travel;
-                        item.Content = travel.GetInfo();
-                        lvTravels.Items.Add(item);
-                    }
-                }  
+                ListViewItem item = new();
+                item.Tag = travel;
+                item.Content = travel.GetInfo();
+                lvTravels.Items.Add(item);
             }
         }
     }
@@ -113,6 +108,13 @@ public partial class TravelsWindow : Window
         if (selectedTravel != null)
         {
             travelManager.RemoveTravel(selectedTravel);
+            
+            if(!signedInUser.IsAdmin)
+            {
+                User user = (User)signedInUser;
+                user.Travels.Remove(selectedTravel);
+            }
+            
             DisplayTravels();
         }
         else
@@ -124,15 +126,26 @@ public partial class TravelsWindow : Window
 
     private void btnAddTravel_Click(object sender, RoutedEventArgs e)
     {
-        AddTravelWindow addTravelWindow = new(this.userManager, this.travelManager);
+        if (!signedInUser.IsAdmin)
+        {
+            AddTravelWindow addTravelWindow = new(this.userManager, this.travelManager);
 
-        addTravelWindow.Show();
+            addTravelWindow.Show();
+        }
+        else
+        {
+            MessageBox.Show("Only users are allowed to add travels!", "Warning!");
+        }
+
     }
 
     private void lvTravels_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        ListViewItem selectedItem = (ListViewItem)lvTravels.SelectedItem;
+        if (selectedTravel is null)
+        {
+            ListViewItem selectedItem = (ListViewItem)lvTravels.SelectedItem;
 
-        selectedTravel = (Travel)selectedItem.Tag;
+            selectedTravel = (Travel)selectedItem.Tag;
+        }
     }
 }

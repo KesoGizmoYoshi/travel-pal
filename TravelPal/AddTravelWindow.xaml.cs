@@ -69,35 +69,24 @@ public partial class AddTravelWindow : Window
         {
             TripTypes tripType = (TripTypes)Enum.Parse(typeof(TripTypes),cbTripType.SelectedItem.ToString());
 
-            //Trip trip = new(destination, country, travelers, packingList, startDate, endDate, tripType);
-
             if (userManager.SignedInUser is User)
             {
                 User signedInUser = (User)userManager.SignedInUser;
-
-                //signedInUser.Travels.Add(trip);
-
-                travelManager.AddTravel(destination, country, travellers, packingList, startDate, endDate, tripType);
-
-                signedInUser.Travels.AddRange(travelManager.Travels);
+           
+                signedInUser.Travels.Add(travelManager.AddTravel(destination, country, travellers, packingList, startDate, endDate, tripType));
             }
         }
         else if (travelType.Equals("Vacation"))
         {
             bool isAllInclusive = (bool)chbAllInclusive.IsChecked;
 
-            //Vacation vacation = new(destination, country, travelers, packingList, startDate, endDate, isAllInclusive);
-
             if (userManager.SignedInUser is User)
             {
                 User signedInUser = (User)userManager.SignedInUser;
 
-                Travel travelAddedtoTheMainList = travelManager.AddTravel(destination, country, travellers, packingList, startDate, endDate, isAllInclusive);
+                //Travel travelAddedtoTheMainList = travelManager.AddTravel(destination, country, travellers, packingList, startDate, endDate, isAllInclusive);
 
-
-                //signedInUser.Travels.Add(travelManager.AddTravel(destination, country, travellers, packingList, startDate, endDate, isAllInclusive));
-
-                //signedInUser.Travels.AddRange(travelManager.Travels);
+                // TO DO FIX THIS FOR VACations
             }
         }
     }
@@ -209,20 +198,27 @@ public partial class AddTravelWindow : Window
 
         foreach (IPackingListItem packingListItem in packingList)
         {
-            if (packingListItem is TravelDocument)
-            {
-                TravelDocument travelDocument = (TravelDocument)packingListItem;
-                ListViewItem item = new();
-                item.Content = travelDocument.GetInfo();
-                lvPackingList.Items.Add(item);
-            }
-            else if (packingListItem is OtherItem)
-            {
-                OtherItem otherItem = (OtherItem)packingListItem;
-                ListViewItem item = new();
-                item.Content = otherItem.GetInfo();
-                lvPackingList.Items.Add(item);
-            }
+            ListViewItem item = new();
+            item.Content = packingListItem.GetInfo();
+            item.Tag = packingListItem;
+            lvPackingList.Items.Add(item);
+
+            //if (packingListItem is TravelDocument)
+            //{
+            //    TravelDocument travelDocument = (TravelDocument)packingListItem;
+            //    ListViewItem item = new();
+            //    item.Content = travelDocument.GetInfo();
+            //    item.Tag = travelDocument;
+            //    lvPackingList.Items.Add(item);
+            //}
+            //else if (packingListItem is OtherItem)
+            //{
+            //    OtherItem otherItem = (OtherItem)packingListItem;
+            //    ListViewItem item = new();
+            //    item.Content = otherItem.GetInfo();
+            //    item.Tag = otherItem;
+            //    lvPackingList.Items.Add(item);
+            //}
         }
     }
 

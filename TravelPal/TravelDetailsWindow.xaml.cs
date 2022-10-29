@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using TravelPal.Enums;
+using TravelPal.Interfaces;
 using TravelPal.Managers;
 using TravelPal.Models;
 
@@ -41,6 +42,14 @@ public partial class TravelDetailsWindow : Window
         datePickerEndDate.Text = travel.EndDate.ToString();
 
         lblTravelDays.Content = $"Number of travel days: {travel.TravelDays}";
+
+        foreach(IPackingListItem packingListItem in travel.PackingList) 
+        {
+            ListViewItem item = new();
+            item.Content = packingListItem.GetInfo();
+            item.Tag = packingListItem;
+            lvPackingList.Items.Add(item);
+        }
 
         if (travel is Trip)
         {

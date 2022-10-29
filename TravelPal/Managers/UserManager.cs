@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,15 +12,16 @@ namespace TravelPal.Managers;
 
 public class UserManager
 {
-    private TravelManager travelManager = new();
     public List<IUser> Users { get; set; } = new();
     public IUser SignedInUser { get; set; }
 
-    public UserManager()
+    public void LoadDefaultUsers(TravelManager travelManager)
     {
         Admin admin = new("admin", "password", Enums.Countries.Antarctica);
-        
-        User Gandalf = new("Gandalf", "password", Enums.Countries.Sweden);
+        User gandalf = new("Gandalf", "password", Enums.Countries.Sweden);
+
+        Users.Add(admin);
+        Users.Add(gandalf);
 
         OtherItem otherItem = new("Toothbrush", 2);
 
@@ -30,16 +32,7 @@ public class UserManager
         DateTime startDate = new DateTime(2022, 10, 26);
         DateTime endDate = new DateTime(2022, 10, 31);
 
-        Trip trip = new("DreamHack", Countries.Japan, 6, packingList, startDate, endDate, TripTypes.Work);
-
-        //Gandalf.Travels.Add(trip);
-
-        travelManager.Travels.Add(trip);
-
-        Gandalf.Travels = travelManager.Travels;
-
-        Users.Add(admin);
-        Users.Add(Gandalf);
+        gandalf.Travels.Add(travelManager.AddTravel("DreamHack", Countries.Japan, 6, packingList, startDate, endDate, TripTypes.Work));
     }
 
     public bool AddUser(IUser userToAdd)

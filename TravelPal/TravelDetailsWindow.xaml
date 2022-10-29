@@ -78,7 +78,7 @@
             Grid.RowSpan="2"
             Orientation="Horizontal">
             <ListView 
-                x:Name="lvPackingItems"/>
+                x:Name="lvPackingList"/>
         </StackPanel>
     </Grid>
 </Window>

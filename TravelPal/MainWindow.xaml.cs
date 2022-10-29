@@ -30,6 +30,8 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
+
+        userManager.LoadDefaultUsers(travelManager);
     }
 
     public MainWindow(UserManager userManager)
