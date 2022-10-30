@@ -55,63 +55,103 @@ public partial class AddTravelWindow : Window
 
     private void btnAddTravel_Click(object sender, RoutedEventArgs e)
     {
-        string destination = txtDestination.Text;
-        Countries country = (Countries)Enum.Parse(typeof(Countries), cbCountries.SelectedItem.ToString());
-        string strTravelers = txtTravelers.Text;
-        string travelType = cbTravelType.SelectedItem.ToString();
-
-        DateTime startDate = (DateTime)datePickerStartDate.SelectedDate;
-        DateTime endDate = (DateTime)datePickerEndDate.SelectedDate;
-
-        string[] inputsToNullCheck = { destination, country.ToString(), strTravelers, travelType, startDate.ToString(), endDate.ToString() };
-
-        int index = 0;
-
-        foreach(string input in inputsToNullCheck)
-        {
-            if (string.IsNullOrWhiteSpace(input)){
-
-                throw new ArgumentException($"Field for {inputsToNullCheck[index]} can not be left empty!");
-            }
-
-            index++;
-        }
-
         try
         {
-            
+            string destination = txtDestination.Text;
+            string strCountry = (string)cbCountries.SelectedItem;
+            string strTravellers = txtTravelers.Text;
+            string travelType = (string)cbTravelType.SelectedItem;
+
+            string[] inputsToCheck = {destination, strCountry, strTravellers, travelType};
+            string[] errorMessages = 
+            {
+                "Type in a destination", 
+                "Select a Country", 
+                "Type in the number of travellers", 
+                "Select a travel type",
+                "Select a trip type",
+                "Select a start date, have to be todays date or later",
+                "Select a end date, have to be a date later then the start date",
+                "Number of travellers must be an integer",
+                
+            };
+
+            int index = 0;
+
+            foreach (string input in inputsToCheck)
+            {
+                if (string.IsNullOrWhiteSpace(input))
+                {
+                    throw new ArgumentException(errorMessages[index]);
+                }
+
+                index++;
+            }
+
+            string strTripType = (string)cbTripType.SelectedItem;
+
+            TripTypes tripType;
+
+            if (string.IsNullOrWhiteSpace(strTripType))
+            {
+                throw new ArgumentException(errorMessages[4]);
+            }
+            else
+            {
+                
+                tripType = (TripTypes)Enum.Parse(typeof(TripTypes), strTripType);
+            }
+
+            Countries country = (Countries)Enum.Parse(typeof(Countries), strCountry);
+
+            DateTime startDate;
+            DateTime endDate;
+
+            if (datePickerStartDate.SelectedDate is not null && datePickerStartDate.SelectedDate > DateTime.Today)
+            {
+                startDate = (DateTime)datePickerStartDate.SelectedDate;
+            }
+            else
+            {
+                throw new ArgumentException(errorMessages[5]);
+            }
+
+            if (datePickerEndDate.SelectedDate is not null && datePickerEndDate.SelectedDate > datePickerStartDate.SelectedDate)
+            {
+               endDate  = (DateTime)datePickerEndDate.SelectedDate;
+            }
+            else
+            {
+                throw new ArgumentException(errorMessages[6]);
+            }
+
+            bool isTravellersAnInteger = int.TryParse(strTravellers, out int travellers);
+
+            if (!isTravellersAnInteger)
+            {
+                throw new ArgumentException(errorMessages[7]);
+            }
+
+            int travelDays = travelManager.CalculateTravelDays(startDate, endDate);
+
+            if (travelType.Equals("Trip"))
+            {
+                signedInUser.Travels.Add(travelManager.AddTravel(destination, country, travellers, packingList, startDate, endDate, tripType));
+            }
+            else if (travelType.Equals("Vacation"))
+            {
+                bool isAllInclusive = (bool)chbAllInclusive.IsChecked;
+
+                signedInUser.Travels.Add(travelManager.AddTravel(destination, country, travellers, packingList, startDate, endDate, isAllInclusive));
+            }
+
+            this.travelsWindow.DisplayTravels();
+            Close();
         }
-        catch (ArgumentException)
+        catch (ArgumentException ex)
         {
-            
+            MessageBox.Show(ex.Message, "Error");
         }
-        //string destination = txtDestination.Text;
-        //Countries country = (Countries)Enum.Parse(typeof(Countries), cbCountries.SelectedItem.ToString());
-        //string strTravelers = txtTravelers.Text;
-        //string travelType = cbTravelType.SelectedItem.ToString();
-
-        //int travellers = Convert.ToInt32(strTravelers);
-
-        //DateTime startDate = (DateTime)datePickerStartDate.SelectedDate;
-        //DateTime endDate = (DateTime)datePickerEndDate.SelectedDate;
-
-        //int travelDays = travelManager.CalculateTravelDays(startDate, endDate);
-
-        //if (travelType.Equals("Trip"))
-        //{
-        //    TripTypes tripType = (TripTypes)Enum.Parse(typeof(TripTypes),cbTripType.SelectedItem.ToString());
-
-        //    signedInUser.Travels.Add(travelManager.AddTravel(destination, country, travellers, packingList, startDate, endDate, tripType));
-        //}
-        //else if (travelType.Equals("Vacation"))
-        //{
-        //    bool isAllInclusive = (bool)chbAllInclusive.IsChecked;
-
-        //    signedInUser.Travels.Add(travelManager.AddTravel(destination, country, travellers, packingList, startDate, endDate, isAllInclusive));
-        //}
-
-        //this.travelsWindow.DisplayTravels();
-        //Close();
     }
 
     private void btnAddItem_Click(object sender, RoutedEventArgs e)
