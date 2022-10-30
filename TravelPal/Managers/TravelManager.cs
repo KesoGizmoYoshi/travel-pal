@@ -14,20 +14,6 @@ public class TravelManager
 {
     public List<Travel> Travels { get; set; } = new();
 
-    public TravelManager()
-    {
-        //OtherItem otherItem = new("Toothbrush", 2);
-
-        //List<IPackingListItem> packingList = new();
-
-        //packingList.Add(otherItem);
-
-        //DateTime startDate = new DateTime(2022, 10, 26);
-        //DateTime endDate = new DateTime(2022, 10, 31);
-
-        //AddTravel("DreamHack", Countries.Japan, 6, packingList, startDate, endDate, TripTypes.Work);
-    }
-
     //Add Travel as a trip, returns the trip, so that the signedInUser can add it to its own list of travels
     public Travel AddTravel(string destination, Countries country, int travellers, List<IPackingListItem> packingList, DateTime startDate, DateTime endDate, TripTypes tripType)
     {
@@ -51,6 +37,15 @@ public class TravelManager
     public void RemoveTravel(Travel travelToRemove)
     {
         Travels.Remove(travelToRemove);
+
+        // TODO add more logic here
+
+        // ......
+    }
+    
+    public int CalculateTravelDays(DateTime startDate, DateTime endDate)
+    {
+        return (int)(endDate - startDate).TotalDays;
     }
 }
 
@@ -61,9 +56,6 @@ public class TravelManager
 // Displaya hela listan för Admin och men spara även travels borttagna av användaren i huvudlistan, bool isDeleted to ha koll
 //
 
-
-
-// maybe change privat field variable to public property, OR create a travelManager-object in MainWindow
 
 // Add public method to calculate travelDays for displaying in the AddTravelWindows
 

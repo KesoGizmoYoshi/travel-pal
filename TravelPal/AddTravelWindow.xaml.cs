@@ -1,4 +1,5 @@
 ﻿using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.Metrics;
@@ -25,21 +26,24 @@ namespace TravelPal;
 /// </summary>
 public partial class AddTravelWindow : Window
 {
+    private List<IPackingListItem> packingList = new();
     private TravelManager travelManager;
     private UserManager userManager;
-
-    private List<IPackingListItem> packingList = new();
+    private TravelsWindow travelsWindow;
     private TravelDocument travelDocument;
+    private User signedInUser;
 
-    public AddTravelWindow(UserManager userManager, TravelManager travelManager)
+    public AddTravelWindow(UserManager userManager, TravelManager travelManager, TravelsWindow travelsWindow)
     {
         InitializeComponent();
 
         this.userManager = userManager;
         this.travelManager = travelManager;
+        this.travelsWindow = travelsWindow;
+
+        signedInUser = (User)this.userManager.SignedInUser;
 
         PopulateAllComboBoxes();
-
     }
 
     private void PopulateAllComboBoxes()
@@ -56,39 +60,58 @@ public partial class AddTravelWindow : Window
         string strTravelers = txtTravelers.Text;
         string travelType = cbTravelType.SelectedItem.ToString();
 
-        int travellers = Convert.ToInt32(strTravelers);
-
         DateTime startDate = (DateTime)datePickerStartDate.SelectedDate;
         DateTime endDate = (DateTime)datePickerEndDate.SelectedDate;
 
-        int travelDays = (int)(endDate - startDate).TotalDays;
+        string[] inputsToNullCheck = { destination, country.ToString(), strTravelers, travelType, startDate.ToString(), endDate.ToString() };
 
-        
+        int index = 0;
 
-        if (travelType.Equals("Trip"))
+        foreach(string input in inputsToNullCheck)
         {
-            TripTypes tripType = (TripTypes)Enum.Parse(typeof(TripTypes),cbTripType.SelectedItem.ToString());
+            if (string.IsNullOrWhiteSpace(input)){
 
-            if (userManager.SignedInUser is User)
-            {
-                User signedInUser = (User)userManager.SignedInUser;
-           
-                signedInUser.Travels.Add(travelManager.AddTravel(destination, country, travellers, packingList, startDate, endDate, tripType));
+                throw new ArgumentException($"Field for {inputsToNullCheck[index]} can not be left empty!");
             }
+
+            index++;
         }
-        else if (travelType.Equals("Vacation"))
+
+        try
         {
-            bool isAllInclusive = (bool)chbAllInclusive.IsChecked;
-
-            if (userManager.SignedInUser is User)
-            {
-                User signedInUser = (User)userManager.SignedInUser;
-
-                //Travel travelAddedtoTheMainList = travelManager.AddTravel(destination, country, travellers, packingList, startDate, endDate, isAllInclusive);
-
-                // TO DO FIX THIS FOR VACations
-            }
+            
         }
+        catch (ArgumentException)
+        {
+            
+        }
+        //string destination = txtDestination.Text;
+        //Countries country = (Countries)Enum.Parse(typeof(Countries), cbCountries.SelectedItem.ToString());
+        //string strTravelers = txtTravelers.Text;
+        //string travelType = cbTravelType.SelectedItem.ToString();
+
+        //int travellers = Convert.ToInt32(strTravelers);
+
+        //DateTime startDate = (DateTime)datePickerStartDate.SelectedDate;
+        //DateTime endDate = (DateTime)datePickerEndDate.SelectedDate;
+
+        //int travelDays = travelManager.CalculateTravelDays(startDate, endDate);
+
+        //if (travelType.Equals("Trip"))
+        //{
+        //    TripTypes tripType = (TripTypes)Enum.Parse(typeof(TripTypes),cbTripType.SelectedItem.ToString());
+
+        //    signedInUser.Travels.Add(travelManager.AddTravel(destination, country, travellers, packingList, startDate, endDate, tripType));
+        //}
+        //else if (travelType.Equals("Vacation"))
+        //{
+        //    bool isAllInclusive = (bool)chbAllInclusive.IsChecked;
+
+        //    signedInUser.Travels.Add(travelManager.AddTravel(destination, country, travellers, packingList, startDate, endDate, isAllInclusive));
+        //}
+
+        //this.travelsWindow.DisplayTravels();
+        //Close();
     }
 
     private void btnAddItem_Click(object sender, RoutedEventArgs e)
@@ -116,7 +139,7 @@ public partial class AddTravelWindow : Window
             packingList.Add(otherItem);
         }
 
-        UpdateListView();
+        UpdateListViewForPackingItems();
 
         txtNameOfTheItem.Clear();
         txtQuantity.Clear();
@@ -161,7 +184,7 @@ public partial class AddTravelWindow : Window
 
     private void cbCountries_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        bool IsUserLocatedInEu = Enum.IsDefined(typeof(EuropeanCountries), userManager.SignedInUser.Location.ToString()); // true, if user live in Eu
+        bool IsUserLocatedInEu = Enum.IsDefined(typeof(EuropeanCountries), signedInUser.Location.ToString()); // true, if user live in Eu
         bool IsDestinationCountryInEu = Enum.IsDefined(typeof(EuropeanCountries), cbCountries.SelectedItem); // true, if destination country is in EU
 
         bool isRequired;
@@ -189,10 +212,10 @@ public partial class AddTravelWindow : Window
             travelDocument.Required = isRequired;
         }
 
-        UpdateListView();
+        UpdateListViewForPackingItems();
     }
 
-    private void UpdateListView()
+    private void UpdateListViewForPackingItems()
     {
         lvPackingList.Items.Clear();
 
@@ -219,6 +242,7 @@ public partial class AddTravelWindow : Window
             //    item.Tag = otherItem;
             //    lvPackingList.Items.Add(item);
             //}
+
         }
     }
 

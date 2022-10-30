@@ -41,7 +41,7 @@ public partial class TravelsWindow : Window
         DisplayTravels();    
     }
 
-    private void DisplayTravels()
+    public void DisplayTravels()
     {
         lvTravels.Items.Clear();
 
@@ -128,7 +128,7 @@ public partial class TravelsWindow : Window
     {
         if (!signedInUser.IsAdmin)
         {
-            AddTravelWindow addTravelWindow = new(this.userManager, this.travelManager);
+            AddTravelWindow addTravelWindow = new(this.userManager, this.travelManager, this);
 
             addTravelWindow.Show();
         }
