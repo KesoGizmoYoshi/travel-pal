@@ -38,6 +38,9 @@
                 IsEditable="True" 
                 IsReadOnly="True"
                 Text="Select Country"
+                Foreground="MediumSlateBlue"
+                Background="MintCream"
+                BorderBrush="MediumSlateBlue"
                 SelectionChanged="cbCountries_SelectionChanged"/>
             <Label 
                 Content="Travelers"/>
@@ -71,7 +74,7 @@
                 SelectedDateChanged="datePickerEndDate_SelectedDateChanged"/>
             <Label
                 x:Name="lblTravelDays"
-                Content="Number of travel days: "/>
+                Content=""/>
             <Label 
                 Content="Warning"/>
             <Button

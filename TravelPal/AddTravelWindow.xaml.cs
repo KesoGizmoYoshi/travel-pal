@@ -72,8 +72,7 @@ public partial class AddTravelWindow : Window
                 "Select a trip type",
                 "Select a start date, have to be todays date or later",
                 "Select a end date, have to be a date later then the start date",
-                "Number of travellers must be an integer",
-                
+                "Number of travellers must be an integer"  
             };
 
             int index = 0;
@@ -125,14 +124,14 @@ public partial class AddTravelWindow : Window
                 throw new ArgumentException(errorMessages[6]);
             }
 
+            int travelDays = travelManager.CalculateTravelDays(startDate, endDate);
+
             bool isTravellersAnInteger = int.TryParse(strTravellers, out int travellers);
 
             if (!isTravellersAnInteger)
             {
                 throw new ArgumentException(errorMessages[7]);
             }
-
-            int travelDays = travelManager.CalculateTravelDays(startDate, endDate);
 
             if (travelType.Equals("Trip"))
             {
@@ -159,32 +158,50 @@ public partial class AddTravelWindow : Window
         string name = txtNameOfTheItem.Text;
         bool isRequired = false;
 
-        if (chbDocument.IsChecked is true)
+        try
         {
-            if(chbRequired.IsChecked is true)
+            if (string.IsNullOrWhiteSpace(name))
             {
-                isRequired = true;
+                throw new ArgumentException("Type in the name of the item");
+            }
+            else if (chbDocument.IsChecked is true)
+            {
+                if (chbRequired.IsChecked is true)
+                {
+                    isRequired = true;
+                }
+
+                TravelDocument travelDocument = new(name, isRequired);
+
+                packingList.Add(travelDocument);
+            }
+            else if (chbDocument.IsChecked is false)
+            {
+                bool isQuantityAnInteger = int.TryParse(txtQuantity.Text, out int quantity);
+
+                if (isQuantityAnInteger)
+                {
+                    OtherItem otherItem = new(name, quantity);
+                    packingList.Add(otherItem);
+                }
+                else
+                {
+                    throw new ArgumentException("Type in the quantity of the item");
+                }
+                //int quantity = Convert.ToInt32(txtQuantity.Text);   
             }
 
-            TravelDocument travelDocument = new(name, isRequired);
+            UpdateListViewForPackingItems();
 
-            packingList.Add(travelDocument);
+            txtNameOfTheItem.Clear();
+            txtQuantity.Clear();
+            chbDocument.IsChecked = false;
+            chbRequired.IsChecked = false;
         }
-        else if(chbDocument.IsChecked is false)
+        catch (ArgumentException ex)
         {
-            int quantity = Convert.ToInt32(txtQuantity.Text);
-
-            OtherItem otherItem = new(name, quantity);
-
-            packingList.Add(otherItem);
+            MessageBox.Show(ex.Message, "Error");
         }
-
-        UpdateListViewForPackingItems();
-
-        txtNameOfTheItem.Clear();
-        txtQuantity.Clear();
-        chbDocument.IsChecked = false;
-        chbRequired.IsChecked = false;
     }
 
     private void chbDocument_Checked(object sender, RoutedEventArgs e)
@@ -265,39 +282,21 @@ public partial class AddTravelWindow : Window
             item.Content = packingListItem.GetInfo();
             item.Tag = packingListItem;
             lvPackingList.Items.Add(item);
-
-            //if (packingListItem is TravelDocument)
-            //{
-            //    TravelDocument travelDocument = (TravelDocument)packingListItem;
-            //    ListViewItem item = new();
-            //    item.Content = travelDocument.GetInfo();
-            //    item.Tag = travelDocument;
-            //    lvPackingList.Items.Add(item);
-            //}
-            //else if (packingListItem is OtherItem)
-            //{
-            //    OtherItem otherItem = (OtherItem)packingListItem;
-            //    ListViewItem item = new();
-            //    item.Content = otherItem.GetInfo();
-            //    item.Tag = otherItem;
-            //    lvPackingList.Items.Add(item);
-            //}
-
         }
     }
 
     private void datePickerStartDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
-    {
-
+    {   
+        if(datePickerEndDate.SelectedDate is not null)
+        {
+            int travelDays = travelManager.CalculateTravelDays((DateTime)datePickerStartDate.SelectedDate, (DateTime)datePickerEndDate.SelectedDate);
+            lblTravelDays.Content = $"Number of travel days: {travelDays}";
+        } 
     }
 
     private void datePickerEndDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
     {
-        DateTime startDate = (DateTime)datePickerStartDate.SelectedDate;
-        DateTime endDate = (DateTime)datePickerEndDate.SelectedDate;
-
-        int travelDays = (int)(endDate - startDate).TotalDays;
-
-        lblTravelDays.Content += travelDays.ToString();
+        int travelDays = travelManager.CalculateTravelDays((DateTime)datePickerStartDate.SelectedDate, (DateTime)datePickerEndDate.SelectedDate);
+        lblTravelDays.Content = $"Number of travel days: {travelDays}";
     }
 }

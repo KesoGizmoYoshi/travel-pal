@@ -34,10 +34,10 @@ public partial class UserDetailsWindow : Window
 
         signedInUser = this.userManager.SignedInUser;
 
-        txtUserName.Text = userManager.SignedInUser.Username;
+        txtUserName.Text = signedInUser.Username;
 
         cbCountries.ItemsSource = Enum.GetNames(typeof(Countries));
-        cbCountries.Text = userManager.SignedInUser.Location.ToString();
+        cbCountries.Text = signedInUser.Location.ToString();
     }
 
     private void btnSave_Click(object sender, RoutedEventArgs e)
@@ -45,8 +45,6 @@ public partial class UserDetailsWindow : Window
         string newUsername = txtUserName.Text;
         string newPassword = pbPassword.Password;
         string newConfirmPassword = pbConfirmPassword.Password;
-
-
 
         Countries newLocation = (Countries)Enum.Parse(typeof(Countries), cbCountries.SelectedItem.ToString());
         signedInUser.Location = newLocation;
@@ -85,7 +83,6 @@ public partial class UserDetailsWindow : Window
                 }
             }
         }
-
         catch (ArgumentException ex)
         {
             lblErrorMessage.Content = ex.Message;
@@ -112,8 +109,6 @@ public partial class UserDetailsWindow : Window
         {
             throw new ArgumentException("Password must be at least 5 characters.");
         }
-
-
     }
 
     private void btnCancel_Click(object sender, RoutedEventArgs e)

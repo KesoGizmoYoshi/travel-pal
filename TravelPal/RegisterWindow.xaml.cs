@@ -35,21 +35,21 @@ public partial class RegisterWindow : Window
 
     private void btnRegister_Click(object sender, RoutedEventArgs e)
     {
-
         try
         {
             string username = txtUsername.Text;
-            string password = pbPassword.Password;
-            string confirmPassword = pbConfirmPassword.Password;
+            string password = pwPassword.Password;
+            string confirmPassword = pwConfirmPassword.Password;
             string selectedLocation = (string)cbLocation.SelectedItem;
 
-            if (string.IsNullOrEmpty(username))
+            //if (string.IsNullOrEmpty(username))
+            //{
+            //    throw new ArgumentException("Type in a username");
+            //}
+            //else 
+            if (username.Length < 3)
             {
-                throw new ArgumentException("Type in a username");
-            }
-            else if(username.Length < 3)
-            {
-                throw new ArgumentException("At least 3 chars");
+                throw new ArgumentException("At least 3 chars (Username)");
             }
             else if (string.IsNullOrEmpty(password) || string.IsNullOrEmpty(confirmPassword)) 
             {
@@ -66,9 +66,7 @@ public partial class RegisterWindow : Window
 
             Countries location = (Countries)Enum.Parse(typeof(Countries), selectedLocation);
 
-            User newUser = new(username, password, location);
-
-            bool isUserAdded = this.userManager.AddUser(newUser);
+            bool isUserAdded = this.userManager.AddUser(new User(username, password, location));
 
             if(isUserAdded)
             {
@@ -86,12 +84,5 @@ public partial class RegisterWindow : Window
             lblRegisterErrorMessage.Visibility = Visibility.Visible;
             lblRegisterErrorMessage.Content = ex.Message;
         }
-        catch (NullReferenceException ex)
-        {
-            lblRegisterErrorMessage.Visibility = Visibility.Visible;
-            lblRegisterErrorMessage.Content = ex.Message;
-        }
     }
-
-
 }
