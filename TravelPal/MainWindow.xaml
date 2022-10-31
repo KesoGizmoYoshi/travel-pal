@@ -52,8 +52,6 @@
                 x:Name="txtUsername"
                 Width="200"
                 Foreground="MediumSlateBlue"
-                Background="MintCream"
-                BorderBrush="MediumSlateBlue"
                 BorderThickness="2"/>
             <Label 
                 Content="Password"
@@ -66,8 +64,6 @@
                 x:Name="pwPassword"
                 Width="200"
                 Foreground="MediumSlateBlue"
-                Background="MintCream"
-                BorderBrush="MediumSlateBlue"
                 BorderThickness="2"/>
             <Label
                 x:Name="lblSignInErrorMessage"

@@ -170,7 +170,7 @@ public partial class TravelDetailsWindow : Window
 
                     User user = (User)userManager.SignedInUser;
 
-                    List<IPackingListItem> packingList = new();
+                    //List<IPackingListItem> packingList = new();
 
                     travelManager.RemoveTravel(trip);
                     user.Travels.Remove(trip);
@@ -186,7 +186,7 @@ public partial class TravelDetailsWindow : Window
                         isAllInclusive = false;
                     }
 
-                    user.Travels.Add(travelManager.AddTravel(newDestination, (Countries)Enum.Parse(typeof(Countries), newCountry), newTravellers, packingList, newStartDate, newEndDate, isAllInclusive));
+                    user.Travels.Add(travelManager.AddTravel(newDestination, (Countries)Enum.Parse(typeof(Countries), newCountry), newTravellers, currentTravel.PackingList, newStartDate, newEndDate, isAllInclusive));
 
                     travelsWindow.DisplayTravels();
                     Close();
@@ -197,12 +197,12 @@ public partial class TravelDetailsWindow : Window
 
                     User user = (User)userManager.SignedInUser;
 
-                    List<IPackingListItem> packingList = new();
+                    //List<IPackingListItem> packingList = new();
                     
                     travelManager.RemoveTravel(vacation);
                     user.Travels.Remove(vacation);
 
-                    user.Travels.Add(travelManager.AddTravel(newDestination, (Countries)Enum.Parse(typeof(Countries), newCountry), newTravellers, packingList, newStartDate, newEndDate, (TripTypes)Enum.Parse(typeof(TripTypes), cbTripType.SelectedIndex.ToString())));
+                    user.Travels.Add(travelManager.AddTravel(newDestination, (Countries)Enum.Parse(typeof(Countries), newCountry), newTravellers, currentTravel.PackingList, newStartDate, newEndDate, (TripTypes)Enum.Parse(typeof(TripTypes), cbTripType.SelectedIndex.ToString())));
 
                     travelsWindow.DisplayTravels();
                     Close();

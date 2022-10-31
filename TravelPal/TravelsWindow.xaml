@@ -5,11 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TravelPal"
         mc:Ignorable="d"
-        Title="TravelsWindow" Height="450" Width="800">
+        Title="TravelsWindow" Background="MintCream" Height="450" Width="600">
     <Grid Margin="20">
+        <Grid.Background>
+            <ImageBrush ImageSource="/Images/background2.png" Stretch="UniformToFill" Opacity="0.3"/>
+        </Grid.Background>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
@@ -31,7 +32,10 @@
                 Content="TravelPal"
                 FontFamily="Arial"
                 FontWeight="Bold"
-                FontSize="50"/>
+                FontSize="50"
+                Foreground="MediumSlateBlue"
+                HorizontalAlignment="Center"
+                Margin="0,-10,0,-10"/>
         </StackPanel>
         <StackPanel
             Grid.Column="2"
@@ -39,7 +43,10 @@
             Orientation="Horizontal"
             HorizontalAlignment="Center">
             <Label
-                x:Name="lblUsername"/>
+                x:Name="lblUsername"
+                Foreground="MediumSlateBlue"        
+                FontSize="16"
+                FontWeight="SemiBold"/>
         </StackPanel>
         <StackPanel
             Grid.Column="2"
@@ -48,11 +55,27 @@
             HorizontalAlignment="Center">
             <Button
                 x:Name="btnMyDetails"
-                Content="My details" 
+                Content="My details"
+                Width="55"
+                Height="30"
+                Foreground="MintCream"
+                Background="MediumSlateBlue"
+                BorderBrush="MediumSlateBlue"
+                FontSize="10"
+                FontWeight="SemiBold"
+                Margin="0,0,5,0"
                 Click="btnMyDetails_Click"/>
             <Button
                 x:Name="btnSignOut"
-                Content="Sign Out" 
+                Content="Sign Out"
+                Width="55"
+                Height="30"
+                Foreground="MintCream"
+                Background="MediumSlateBlue"
+                BorderBrush="MediumSlateBlue"
+                FontSize="10"
+                FontWeight="SemiBold"
+                Margin="5,0,0,0"
                 Click="btnSignOut_Click"/>
         </StackPanel>
         <ListView
@@ -60,32 +83,65 @@
             Grid.Column="0"
             Grid.Row="2"
             Grid.ColumnSpan="2"
-            Grid.RowSpan="2" SelectionChanged="lvTravels_SelectionChanged"
-            />
-        <StackPanel 
+            Grid.RowSpan="2"
+            Height="250"
+            VerticalAlignment="Top"
+            Foreground="MediumSlateBlue"
+            BorderThickness="2"
+            SelectionChanged="lvTravels_SelectionChanged"/>
+        <Button
+            x:Name="btnTravelDetails"
             Grid.Column="0"
             Grid.Row="5"
-            Grid.ColumnSpan="2"
-            Orientation="Horizontal">
-            <Button
-                x:Name="btnTravelDetails"
-                Content="Travel Details" 
-                Click="btnTravelDetails_Click"/>
-            <Button
-                x:Name="btnAddTravel"
-                Content="Add Travel" 
-                Click="btnAddTravel_Click"/>
-            <Button
-                x:Name="btnRemoveTravel"
-                Content="Remove Travel" 
-                Click="btnRemoveTravel_Click"/>
-        </StackPanel>
+            Content="Travel Details"
+            Width="130"
+            Height="30"
+            Foreground="MintCream"
+            Background="MediumSlateBlue"
+            BorderBrush="MediumSlateBlue"
+            FontSize="16"
+            FontWeight="SemiBold"
+            HorizontalAlignment="Center"
+            Click="btnTravelDetails_Click"/>
+        <Button
+            x:Name="btnRemoveTravel"
+            Grid.Column="1"
+            Grid.Row="5"
+            Content="Remove Travel"
+            Width="130"
+            Height="30"
+            Foreground="MintCream"
+            Background="MediumSlateBlue"
+            BorderBrush="MediumSlateBlue"
+            FontSize="16"
+            FontWeight="SemiBold"
+            HorizontalAlignment="Center"
+            Click="btnRemoveTravel_Click"/>
+        <Button
+            x:Name="btnAddTravel"
+            Grid.Column="2"
+            Grid.Row="5"
+            Content="Add Travel"
+            Width="130"
+            Height="30"
+            Foreground="MintCream"
+            Background="MediumSlateBlue"
+            BorderBrush="MediumSlateBlue"
+            FontSize="16"
+            FontWeight="SemiBold"
+            HorizontalAlignment="Center"
+            Click="btnAddTravel_Click"/>
         <Button 
             x:Name="btnAbout"
             Grid.Column="2"
             Grid.Row="3"
             Content="About"
-            Height="20"
-            Width="50"/>
+            Width="55"
+            Height="30"
+            Foreground="MintCream"
+            Background="MediumSlateBlue"
+            BorderBrush="MediumSlateBlue"
+            FontSize="10"
+            FontWeight="SemiBold"/>
     </Grid>
 </Window>

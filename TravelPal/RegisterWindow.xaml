@@ -51,8 +51,6 @@
                 x:Name="txtUsername"
                 Width="200"
                 Foreground="MediumSlateBlue"
-                Background="MintCream"
-                BorderBrush="MediumSlateBlue"
                 BorderThickness="2"/>
             <Label 
                 Content="Password"
@@ -65,8 +63,6 @@
                 x:Name="pwPassword"
                 Width="200"
                 Foreground="MediumSlateBlue"
-                Background="MintCream"
-                BorderBrush="MediumSlateBlue"
                 BorderThickness="2"/>
             <Label 
                 Content="Confirm Password"
@@ -79,8 +75,6 @@
                 x:Name="pwConfirmPassword"
                 Width="200"
                 Foreground="MediumSlateBlue"
-                Background="MintCream"
-                BorderBrush="MediumSlateBlue"
                 BorderThickness="2"/>
             <ComboBox
                 x:Name="cbLocation"
@@ -89,20 +83,8 @@
                 Text="Select Location"
                 Width="200"
                 Foreground="MediumSlateBlue"
-                Background="MediumSlateBlue"
-                BorderBrush="#FF9990D2"
                 BorderThickness="2"
-                Margin="0,20,0,0">
-                <ComboBox.Resources>
-                    <Style TargetType="TextBlock">
-                        <Style.Triggers>
-                            <DataTrigger>
-                                <Setter Property="Background" Value="Red"/>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </ComboBox.Resources>
-            </ComboBox>
+                Margin="0,20,0,0"/>
             <Label
                 x:Name="lblRegisterErrorMessage"
                 Content=""

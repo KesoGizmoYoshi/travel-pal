@@ -5,81 +5,144 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TravelPal"
         mc:Ignorable="d"
-        Title="AddTravelWindow" Height="450" Width="800">
+        Title="AddTravelWindow" Background="MintCream" Height="470" Width="600">
     <Grid Margin="20">
+        <Grid.Background>
+            <ImageBrush ImageSource="/Images/background2.png" Stretch="None" Opacity="0.3"/>
+        </Grid.Background>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="5*"/>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="5*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="40"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Label
-           Grid.ColumnSpan="2"
-           Content="TravelPal"
-           FontFamily="Arial"
-           FontWeight="Bold"
-           FontSize="40"/>
+            Grid.ColumnSpan="2"
+            Content="TravelPal"
+            FontFamily="Arial"
+            FontWeight="Bold"
+            FontSize="40"
+            Foreground="MediumSlateBlue"
+            HorizontalAlignment="Left"
+            Margin="0,-12,0,0"/>
         <StackPanel
             Grid.Row="1"
             Grid.RowSpan="4">
             <Label 
-                Content="Destination"/>
+                Content="Destination"
+                Foreground="MediumSlateBlue"
+                HorizontalAlignment="Left"
+                Margin="18,-5,0,0"
+                FontSize="16"
+                FontWeight="SemiBold"/>
             <TextBox 
-                x:Name="txtDestination"/>
-            
+                x:Name="txtDestination"
+                Width="200"
+                Foreground="MediumSlateBlue"
+                BorderThickness="2"/>
             <ComboBox 
                 x:Name="cbCountries"
                 IsEditable="True" 
                 IsReadOnly="True"
                 Text="Select Country"
+                Width="200"
                 Foreground="MediumSlateBlue"
-                Background="MintCream"
-                BorderBrush="MediumSlateBlue"
+                BorderThickness="2"
+                Margin="0,10,0,0"
                 SelectionChanged="cbCountries_SelectionChanged"/>
             <Label 
-                Content="Travelers"/>
+                Content="Travelers"
+                Foreground="MediumSlateBlue"
+                HorizontalAlignment="Left"
+                Margin="18,-5,0,0"
+                FontSize="16"
+                FontWeight="SemiBold"/>
             <TextBox 
-                x:Name="txtTravelers"/>
+                x:Name="txtTravelers"
+                Width="200"
+                Foreground="MediumSlateBlue"
+                BorderThickness="2"/>
             <ComboBox 
                 x:Name="cbTravelType"
                 IsEditable="True" 
                 IsReadOnly="True"
                 Text="Select Travel Type"
+                Width="200"
+                Foreground="MediumSlateBlue"
+                BorderThickness="2"
+                Margin="0,10,0,0"
                 SelectionChanged="cbTravelType_SelectionChanged"/>
             <ComboBox 
                 x:Name="cbTripType"
                 IsEditable="True" 
                 IsReadOnly="True"
                 Text="Select Trip Type"
+                Width="200"
+                Foreground="MediumSlateBlue"
+                BorderThickness="2"
+                Margin="0,10,0,0"
                 Visibility="Collapsed"/>
             <CheckBox 
                 x:Name="chbAllInclusive"
                 Content="All Inclusive"
+                Foreground="MediumSlateBlue"
+                HorizontalAlignment="Left"
+                Margin="23,5,0,0"
+                FontSize="16"
+                FontWeight="SemiBold"
+                BorderThickness="2"
+                VerticalContentAlignment="Center"
                 Visibility="Collapsed"/>
             <Label 
-                Content="Start Date"/>
+                Content="Start Date"
+                Foreground="MediumSlateBlue"
+                HorizontalAlignment="Left"
+                Margin="18,-5,0,0"
+                FontSize="16"
+                FontWeight="SemiBold"/>
             <DatePicker 
                 x:Name="datePickerStartDate"
+                Width="200"
+                Foreground="MediumSlateBlue"
                 SelectedDateChanged="datePickerStartDate_SelectedDateChanged"/>
             <Label 
-                Content="End Date"/>
+                Content="End Date"
+                Foreground="MediumSlateBlue"
+                HorizontalAlignment="Left"
+                Margin="18,-5,0,0"
+                FontSize="16"
+                FontWeight="SemiBold"/>
             <DatePicker 
                 x:Name="datePickerEndDate"
+                Width="200"
+                Foreground="MediumSlateBlue"
                 SelectedDateChanged="datePickerEndDate_SelectedDateChanged"/>
             <Label
                 x:Name="lblTravelDays"
-                Content=""/>
-            <Label 
-                Content="Warning"/>
+                Content=""
+                Foreground="MediumSlateBlue"
+                HorizontalAlignment="Left"
+                Margin="18,-5,0,0"
+                FontSize="16"
+                FontWeight="SemiBold"/>
             <Button
                 x:Name="btnAddTravel"
-                Content="Add Travel" Click="btnAddTravel_Click"/>
+                Content="Add Travel"
+                Width="200"
+                Height="30"
+                Foreground="MintCream"
+                Background="MediumSlateBlue"
+                BorderBrush="MediumSlateBlue"
+                FontSize="16"
+                FontWeight="SemiBold"
+                HorizontalAlignment="Center"
+                Click="btnAddTravel_Click"/>
 
         </StackPanel>
         <StackPanel
@@ -87,35 +150,72 @@
             Grid.Row="1"
             Grid.RowSpan="4">
             <Label 
-                Content="Name of the item"/>
+                Content="Name of the item"
+                Foreground="MediumSlateBlue"
+                HorizontalAlignment="Left"
+                Margin="18,-5,0,0"
+                FontSize="16"
+                FontWeight="SemiBold"/>
             <TextBox 
-                x:Name="txtNameOfTheItem"/>
+                x:Name="txtNameOfTheItem"
+                Width="200"
+                Foreground="MediumSlateBlue"
+                BorderThickness="2"/>
             <CheckBox
                 x:Name="chbDocument"
-                Content="Document" 
+                Content="Document"
+                Foreground="MediumSlateBlue"
+                HorizontalAlignment="Left"
+                Margin="23,10,0,0"
+                FontSize="16"
+                FontWeight="SemiBold"
+                BorderThickness="2"
+                VerticalContentAlignment="Center"
                 Checked="chbDocument_Checked"
                 Unchecked="chbDocument_Unchecked"/>
             <CheckBox
                 x:Name="chbRequired"
                 Content="Required"
+                Foreground="MediumSlateBlue"
+                HorizontalAlignment="Left"
+                Margin="23,10,0,0"
+                FontSize="16"
+                FontWeight="SemiBold"
+                BorderThickness="2"
+                VerticalContentAlignment="Center"
                 Visibility="Collapsed"/>
             <Label
                 x:Name="lblQuantity"
                 Content="Quantity"
-                />
+                Foreground="MediumSlateBlue"
+                HorizontalAlignment="Left"
+                Margin="18,-5,0,0"
+                FontSize="16"
+                FontWeight="SemiBold"/>
             <TextBox
                 x:Name="txtQuantity"
-                />
-            <Label 
-                Content="Warning"/>
+                Width="200"
+                Foreground="MediumSlateBlue"
+                BorderThickness="2"/>
             <Button 
                 x:Name="btnAddItem"
-                Content="Add Item" Click="btnAddItem_Click"/>
-            <Label 
-                Content="some text"/>
+                Content="Add Item" 
+                Width="200"
+                Height="30"
+                Foreground="MintCream"
+                Background="MediumSlateBlue"
+                BorderBrush="MediumSlateBlue"
+                FontSize="16"
+                FontWeight="SemiBold"
+                HorizontalAlignment="Center"
+                Margin="0,10,0,10"
+                Click="btnAddItem_Click"/>
             <ListView 
                 x:Name="lvPackingList"
-                Height="100"/>
+                Height="100"
+                Width="200"
+                Foreground="MediumSlateBlue"
+                BorderThickness="2"/>
         </StackPanel>
     </Grid>
 </Window>
