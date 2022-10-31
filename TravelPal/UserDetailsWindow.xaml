@@ -45,11 +45,11 @@
             <Label 
                 Content="Password"/>
             <PasswordBox 
-                x:Name="pbPassword"/>
+                x:Name="pwPassword"/>
             <Label 
                 Content="Confirm Password"/>
             <PasswordBox 
-                x:Name="pbConfirmPassword"/>
+                x:Name="pwConfirmPassword"/>
             <Label 
                 x:Name="lblErrorMessage"
                 Visibility="Collapsed"

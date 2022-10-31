@@ -42,11 +42,6 @@ public partial class RegisterWindow : Window
             string confirmPassword = pwConfirmPassword.Password;
             string selectedLocation = (string)cbLocation.SelectedItem;
 
-            //if (string.IsNullOrEmpty(username))
-            //{
-            //    throw new ArgumentException("Type in a username");
-            //}
-            //else 
             if (username.Length < 3)
             {
                 throw new ArgumentException("At least 3 chars (Username)");

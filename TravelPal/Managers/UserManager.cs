@@ -23,16 +23,22 @@ public class UserManager
         Users.Add(admin);
         Users.Add(gandalf);
 
-        OtherItem otherItem = new("Toothbrush", 2);
+        TravelDocument travelDocument1 = new("Passport", true);
+        TravelDocument travelDocument2 = new("Passport", false);
 
-        List<IPackingListItem> packingList = new();
+        OtherItem otherItem1 = new("Toothbrush", 1);
+        OtherItem otherItem2 = new("Sunscreen", 2);
 
-        packingList.Add(otherItem);
+        List<IPackingListItem> packingList1 = new();
+        List<IPackingListItem> packingList2 = new();
 
-        DateTime startDate = new DateTime(2022, 10, 26);
-        DateTime endDate = new DateTime(2022, 10, 31);
+        packingList1.Add(travelDocument1);
+        packingList1.Add(otherItem1);
+        packingList2.Add(travelDocument2);
+        packingList2.Add(otherItem2);
 
-        gandalf.Travels.Add(travelManager.AddTravel("DreamHack", Countries.Japan, 6, packingList, startDate, endDate, TripTypes.Work));
+        gandalf.Travels.Add(travelManager.AddTravel("DreamHack", Countries.Japan, 2, packingList1, new DateTime(2022, 11, 20), new DateTime(2022, 11, 25), TripTypes.Leisure));
+        gandalf.Travels.Add(travelManager.AddTravel("Mallorca", Countries.Spain, 2, packingList2, new DateTime(2023, 07, 01), new DateTime(2023, 07, 14), true));
     }
 
     public bool AddUser(IUser userToAdd)

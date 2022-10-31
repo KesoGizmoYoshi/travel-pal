@@ -114,7 +114,8 @@ public partial class TravelsWindow : Window
                 User user = (User)signedInUser;
                 user.Travels.Remove(selectedTravel);
             }
-            
+
+            selectedTravel = null;
             DisplayTravels();
         }
         else
@@ -141,10 +142,10 @@ public partial class TravelsWindow : Window
 
     private void lvTravels_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        if (selectedTravel is null)
-        {
-            ListViewItem selectedItem = (ListViewItem)lvTravels.SelectedItem;
+        ListViewItem selectedItem = (ListViewItem)lvTravels.SelectedItem;
 
+        if (selectedItem is not null)
+        {
             selectedTravel = (Travel)selectedItem.Tag;
         }
     }

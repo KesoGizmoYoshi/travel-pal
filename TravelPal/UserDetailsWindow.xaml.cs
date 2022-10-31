@@ -38,49 +38,40 @@ public partial class UserDetailsWindow : Window
 
         cbCountries.ItemsSource = Enum.GetNames(typeof(Countries));
         cbCountries.Text = signedInUser.Location.ToString();
+
+        pwPassword.Password = signedInUser.Password;
+        pwConfirmPassword.Password = signedInUser.Password;
+        
     }
 
     private void btnSave_Click(object sender, RoutedEventArgs e)
     {
         string newUsername = txtUserName.Text;
-        string newPassword = pbPassword.Password;
-        string newConfirmPassword = pbConfirmPassword.Password;
+        string newPassword = pwPassword.Password;
+        string newConfirmPassword = pwConfirmPassword.Password;
 
         Countries newLocation = (Countries)Enum.Parse(typeof(Countries), cbCountries.SelectedItem.ToString());
-        signedInUser.Location = newLocation;
-
+        
         try
         {
-            if(!signedInUser.Username.Equals(newUsername))
+            if (newUsername.Length < 3)
             {
-                if (newUsername.Length < 3)
-                {
-                    throw new ArgumentException("Username most be 3 or more characters.");
-                }
-                else
-                {
-                    bool isUsernameUpdated = userManager.UpdateUsername(signedInUser, newUsername);
-
-                    if (isUsernameUpdated)
-                    {
-                        travelsWindow.UpdateUsernameLabel();
-                        Close();
-                    }
-                    else
-                    {
-                        throw new ArgumentException("Username does already exist.");
-                    }
-                }
+                throw new ArgumentException("Username most be 3 or more characters.");
             }
 
-            if (!string.IsNullOrWhiteSpace(newPassword))
-            {
-                bool isPasswordUpdated = UpdatePassword(newPassword, newConfirmPassword);
+            bool isUsernameUpdated = userManager.UpdateUsername(signedInUser, newUsername);
+            
+            bool isPasswordUpdated = UpdatePassword(newPassword, newConfirmPassword);
 
-                if (isPasswordUpdated)
-                {
-                    Close();
-                }
+            if (!isUsernameUpdated && !signedInUser.Username.Equals(newUsername))
+            {
+                throw new ArgumentException("Username does already exist.");
+            }
+            else 
+            {
+                signedInUser.Location = newLocation;
+                travelsWindow.UpdateUsernameLabel();
+                Close();
             }
         }
         catch (ArgumentException ex)
@@ -88,6 +79,45 @@ public partial class UserDetailsWindow : Window
             lblErrorMessage.Content = ex.Message;
             lblErrorMessage.Visibility = Visibility.Visible;
         }
+        //try
+        //{
+        //    if(!signedInUser.Username.Equals(newUsername))
+        //    {
+        //        if (newUsername.Length < 3)
+        //        {
+        //            throw new ArgumentException("Username most be 3 or more characters.");
+        //        }
+        //        else
+        //        {
+        //            bool isUsernameUpdated = userManager.UpdateUsername(signedInUser, newUsername);
+
+        //            if (isUsernameUpdated)
+        //            {
+        //                travelsWindow.UpdateUsernameLabel();
+        //                Close();
+        //            }
+        //            else
+        //            {
+        //                throw new ArgumentException("Username does already exist.");
+        //            }
+        //        }
+        //    }
+
+        //    if (!string.IsNullOrWhiteSpace(newPassword))
+        //    {
+        //        bool isPasswordUpdated = UpdatePassword(newPassword, newConfirmPassword);
+
+        //        if (isPasswordUpdated)
+        //        {
+        //            Close();
+        //        }
+        //    }
+        //}
+        //catch (ArgumentException ex)
+        //{
+        //    lblErrorMessage.Content = ex.Message;
+        //    lblErrorMessage.Visibility = Visibility.Visible;
+        //}
     }
 
     private bool UpdatePassword(string newPassword, string newConfirmPassword)

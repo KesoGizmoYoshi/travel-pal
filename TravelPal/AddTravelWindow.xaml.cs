@@ -55,28 +55,28 @@ public partial class AddTravelWindow : Window
 
     private void btnAddTravel_Click(object sender, RoutedEventArgs e)
     {
-        try
-        {
-            string destination = txtDestination.Text;
-            string strCountry = (string)cbCountries.SelectedItem;
-            string strTravellers = txtTravelers.Text;
-            string travelType = (string)cbTravelType.SelectedItem;
+        string destination = txtDestination.Text;
+        string strCountry = (string)cbCountries.SelectedItem;
+        string strTravellers = txtTravelers.Text;
+        string travelType = (string)cbTravelType.SelectedItem;
 
-            string[] inputsToCheck = {destination, strCountry, strTravellers, travelType};
-            string[] errorMessages = 
-            {
-                "Type in a destination", 
-                "Select a Country", 
-                "Type in the number of travellers", 
+        string[] inputsToCheck = { destination, strCountry, strTravellers, travelType };
+        string[] errorMessages =
+        {
+                "Type in a destination",
+                "Select a Country",
+                "Type in the number of travellers",
                 "Select a travel type",
                 "Select a trip type",
                 "Select a start date, have to be todays date or later",
                 "Select a end date, have to be a date later then the start date",
-                "Number of travellers must be an integer"  
+                "Number of travellers must be an integer"
             };
 
-            int index = 0;
+        int index = 0;
 
+        try
+        {
             foreach (string input in inputsToCheck)
             {
                 if (string.IsNullOrWhiteSpace(input))
@@ -97,7 +97,6 @@ public partial class AddTravelWindow : Window
             }
             else
             {
-                
                 tripType = (TripTypes)Enum.Parse(typeof(TripTypes), strTripType);
             }
 
@@ -188,7 +187,6 @@ public partial class AddTravelWindow : Window
                 {
                     throw new ArgumentException("Type in the quantity of the item");
                 }
-                //int quantity = Convert.ToInt32(txtQuantity.Text);   
             }
 
             UpdateListViewForPackingItems();

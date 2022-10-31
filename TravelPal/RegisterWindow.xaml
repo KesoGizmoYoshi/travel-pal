@@ -82,17 +82,27 @@
                 Background="MintCream"
                 BorderBrush="MediumSlateBlue"
                 BorderThickness="2"/>
-            <ComboBox 
+            <ComboBox
                 x:Name="cbLocation"
                 IsEditable="True" 
                 IsReadOnly="True"
                 Text="Select Location"
                 Width="200"
                 Foreground="MediumSlateBlue"
-                Background="MintCream"
-                BorderBrush="MediumSlateBlue"
+                Background="MediumSlateBlue"
+                BorderBrush="#FF9990D2"
                 BorderThickness="2"
-                Margin="0,20,0,0"/>
+                Margin="0,20,0,0">
+                <ComboBox.Resources>
+                    <Style TargetType="TextBlock">
+                        <Style.Triggers>
+                            <DataTrigger>
+                                <Setter Property="Background" Value="Red"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ComboBox.Resources>
+            </ComboBox>
             <Label
                 x:Name="lblRegisterErrorMessage"
                 Content=""

@@ -79,6 +79,12 @@
             Orientation="Horizontal">
             <ListView 
                 x:Name="lvPackingList"/>
+            <Button 
+                x:Name="Cancel"
+                Content="Cancel" Click="Cancel_Click"/>
+            <Button 
+                x:Name="Save"
+                Content="Save"/>
         </StackPanel>
     </Grid>
 </Window>
