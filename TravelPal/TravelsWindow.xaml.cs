@@ -93,7 +93,7 @@ public partial class TravelsWindow : Window
     {
         if (selectedTravel != null)
         {
-            TravelDetailsWindow travelDetailsWindow = new(this.userManager, this.travelManager, selectedTravel);
+            TravelDetailsWindow travelDetailsWindow = new(this.userManager, this.travelManager, this, selectedTravel);
 
             travelDetailsWindow.Show();
         }
