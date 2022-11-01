@@ -257,7 +257,7 @@ public partial class AddTravelWindow : Window
             isRequired = true;
         }
 
-        if (lvPackingList.Items.Count == 0 || travelDocument == null)      // Fix this !!!!! Or lock everything listView before picking a country
+        if (lvPackingList.Items.Count == 0 || travelDocument == null)
         {
             travelDocument = new("Passport", isRequired);
             packingList.Add(travelDocument);

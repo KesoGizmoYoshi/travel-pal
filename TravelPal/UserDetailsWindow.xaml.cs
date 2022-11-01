@@ -40,8 +40,7 @@ public partial class UserDetailsWindow : Window
         cbCountries.Text = signedInUser.Location.ToString();
 
         pwPassword.Password = signedInUser.Password;
-        pwConfirmPassword.Password = signedInUser.Password;
-        
+        pwConfirmPassword.Password = signedInUser.Password;     
     }
 
     private void btnSave_Click(object sender, RoutedEventArgs e)

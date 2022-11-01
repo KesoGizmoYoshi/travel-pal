@@ -44,27 +44,26 @@ public partial class TravelDetailsWindow : Window
             btnEdit.IsEnabled = false;
         }
 
-        PopulateFields();
-
+        PopulateCommonFields();
+        PopulateTravelTypeFields();
+        PopulateListView();
     }
 
-    private void PopulateFields()
+    private void PopulateCommonFields()
     {
         txtDestination.Text = this.currentTravel.Destination;
-
         cbCountries.ItemsSource = Enum.GetNames(typeof(Countries));
         cbCountries.Text = this.currentTravel.Country.ToString();
-
         txtTravelers.Text = this.currentTravel.Travellers.ToString();
-
-        cbTravelType.ItemsSource = new[] { "Trip", "Vacation" };
-
-        cbTripType.ItemsSource = Enum.GetNames(typeof(TripTypes));
-
         datePickerStartDate.Text = this.currentTravel.StartDate.ToString();
         datePickerEndDate.Text = this.currentTravel.EndDate.ToString();
-
         lblTravelDays.Content = $"Number of travel days: {this.currentTravel.TravelDays}";
+    }
+
+    private void PopulateTravelTypeFields()
+    {
+        cbTravelType.ItemsSource = new[] { "Trip", "Vacation" };
+        cbTripType.ItemsSource = Enum.GetNames(typeof(TripTypes));
 
         if (this.currentTravel is Trip)
         {
@@ -88,8 +87,6 @@ public partial class TravelDetailsWindow : Window
 
             cbTripType.Visibility = Visibility.Collapsed;
         }
-
-        PopulateListView();
     }
 
     private void PopulateListView()
@@ -101,10 +98,12 @@ public partial class TravelDetailsWindow : Window
             ListViewItem item = new();
             item.Content = packingListItem.GetInfo();
             item.Tag = packingListItem;
+
             if (packingListItem.Name.Equals("Passport"))
             {
                 item.IsEnabled = false;
             }
+
             lvPackingList.Items.Add(item);
         }
     }
@@ -278,43 +277,48 @@ public partial class TravelDetailsWindow : Window
     {
         ListViewItem item = (ListViewItem)lvPackingList.SelectedItem;
 
-        IPackingListItem selectedItem = (IPackingListItem)item.Tag;
+        if (item is not null)
+        {
+            IPackingListItem selectedItem = (IPackingListItem)item.Tag;
 
-        btnEditItem.IsEnabled = true;
+            btnEditItem.IsEnabled = true;
 
-        txtNameOfTheItem.Text = selectedItem.Name;
+            txtNameOfTheItem.Text = selectedItem.Name;
+
+            if (selectedItem is OtherItem)
+            {
+                chbDocument.Visibility = Visibility.Hidden;
+                chbRequired.Visibility = Visibility.Hidden;
+                txtNameOfTheItem.IsEnabled = true;
+                txtQuantity.IsEnabled = true;
+
+                OtherItem otherItem = (OtherItem)selectedItem;
+                txtQuantity.Text = otherItem.Quantity.ToString();
+            }
+            else if (selectedItem is TravelDocument)
+            {
+                lblQuantity.Visibility = Visibility.Hidden;
+                txtQuantity.Visibility = Visibility.Hidden;
+                chbDocument.Visibility = Visibility.Visible;
+                chbRequired.Visibility = Visibility.Visible;
+                chbDocument.IsEnabled = true;
+                chbRequired.IsEnabled = true;
+                chbDocument.IsChecked = true;
+
+                TravelDocument travelDocumnet = (TravelDocument)selectedItem;
+
+                if (travelDocumnet.Required)
+                {
+                    chbRequired.IsChecked = true;
+                }
+                else
+                {
+                    chbRequired.IsChecked = false;
+                }
+            }
+        }
+
         
-        if(selectedItem is OtherItem)
-        {
-            chbDocument.Visibility = Visibility.Hidden;
-            chbRequired.Visibility = Visibility.Hidden;
-            txtNameOfTheItem.IsEnabled = true;
-            txtQuantity.IsEnabled = true;
-
-            OtherItem otherItem = (OtherItem)selectedItem;
-            txtQuantity.Text = otherItem.Quantity.ToString();
-        }
-        else if(selectedItem is TravelDocument) 
-        {
-            lblQuantity.Visibility = Visibility.Hidden;
-            txtQuantity.Visibility = Visibility.Hidden;
-            chbDocument.Visibility = Visibility.Visible;
-            chbRequired.Visibility = Visibility.Visible;
-            chbDocument.IsEnabled = true;
-            chbRequired.IsEnabled = true;
-            chbDocument.IsChecked = true;
-
-            TravelDocument  travelDocumnet = (TravelDocument)selectedItem;
-
-            if (travelDocumnet.Required)
-            {
-                chbRequired.IsChecked = true;
-            }
-            else
-            {
-                chbRequired.IsChecked = false;
-            }
-        }
     }
 
     private void btnEditItem_Click(object sender, RoutedEventArgs e)
@@ -405,10 +409,15 @@ public partial class TravelDetailsWindow : Window
             isRequired = true;
         }
 
-        if (currentTravel.PackingList[0] is TravelDocument)
+        foreach(ListViewItem item in lvPackingList.Items)
         {
-            TravelDocument travelDocument = (TravelDocument)currentTravel.PackingList[0];
-            travelDocument.Required = isRequired;
+            IPackingListItem packingListItem = (IPackingListItem)item.Tag;
+            
+            if(packingListItem.Name.Equals("Passport"))
+            {
+                TravelDocument travelDocument = (TravelDocument)packingListItem;
+                travelDocument.Required = isRequired;
+            }
         }
 
         PopulateListView();
