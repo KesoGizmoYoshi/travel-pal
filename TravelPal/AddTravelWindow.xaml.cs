@@ -257,7 +257,7 @@ public partial class AddTravelWindow : Window
             isRequired = true;
         }
 
-        if (lvPackingList.Items.Count == 0)
+        if (lvPackingList.Items.Count == 0)      // Fix this !!!!!
         {
             travelDocument = new("Passport", isRequired);
             packingList.Add(travelDocument);

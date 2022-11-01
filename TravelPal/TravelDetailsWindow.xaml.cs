@@ -13,6 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Xml.Linq;
 using TravelPal.Enums;
 using TravelPal.Interfaces;
 using TravelPal.Managers;
@@ -185,10 +186,7 @@ public partial class TravelDetailsWindow : Window
                 if (currentTravel is Trip)
                 {
                     Trip trip = (Trip)currentTravel;
-
                     User user = (User)userManager.SignedInUser;
-
-                    //List<IPackingListItem> packingList = new();
 
                     travelManager.RemoveTravel(trip);
                     user.Travels.Remove(trip);
@@ -212,10 +210,7 @@ public partial class TravelDetailsWindow : Window
                 else if (currentTravel is Vacation)
                 {
                     Vacation vacation = (Vacation)currentTravel;
-
                     User user = (User)userManager.SignedInUser;
-
-                    //List<IPackingListItem> packingList = new();
                     
                     travelManager.RemoveTravel(vacation);
                     user.Travels.Remove(vacation);
@@ -255,7 +250,6 @@ public partial class TravelDetailsWindow : Window
                 this.currentTravel.EndDate = newEndDate;
                 this.currentTravel.TravelDays = travelManager.CalculateTravelDays(newStartDate, newEndDate);
                 
-
                 travelsWindow.DisplayTravels();
                 Close();
             }
@@ -302,12 +296,19 @@ public partial class TravelDetailsWindow : Window
         }
         else if(selectedItem is TravelDocument) 
         {
+            lblQuantity.Visibility = Visibility.Hidden;
             txtQuantity.Visibility = Visibility.Hidden;
             chbDocument.Visibility = Visibility.Visible;
             chbRequired.Visibility = Visibility.Visible;
+            chbDocument.IsChecked = true;
 
+            TravelDocument  travelDocumnet = (TravelDocument)selectedItem;
+
+            if (travelDocumnet.Required)
+            {
+                chbRequired.IsChecked = true;
+            }
         }
-
     }
 
     private void btnEditItem_Click(object sender, RoutedEventArgs e)
@@ -316,9 +317,67 @@ public partial class TravelDetailsWindow : Window
 
         IPackingListItem selectedItem = (IPackingListItem)item.Tag;
 
-        selectedItem.Name = txtNameOfTheItem.Text;
+        string newName = txtNameOfTheItem.Text;
 
-        // TODO quantity and so on ...
+        try
+        {
+            if (string.IsNullOrWhiteSpace(newName))
+            {
+                throw new ArgumentException("Type in the name of the item");
+            }
+            else if (chbDocument.IsChecked is true)
+            {
+                TravelDocument travelDocument = (TravelDocument)selectedItem;
+                travelDocument.Name = newName;
+
+                if (chbRequired.IsChecked is true)
+                {
+                    travelDocument.Required = true;
+                }
+            }
+            else if (chbDocument.IsChecked is false)
+            {
+                bool isQuantityAnInteger = int.TryParse(txtQuantity.Text, out int quantity);
+
+                if (isQuantityAnInteger)
+                {
+                    OtherItem otherItem = (OtherItem)selectedItem;
+                    otherItem.Name = newName;
+                    otherItem.Quantity = quantity;
+                }
+                else
+                {
+                    throw new ArgumentException("Type in the quantity of the item");
+                }
+            }
+
+            PopulateListView();
+        }
+        catch (ArgumentException ex)
+        {
+            MessageBox.Show(ex.Message, "Error");
+        }
+
+        //ListViewItem item = (ListViewItem)lvPackingList.SelectedItem;
+
+        //IPackingListItem selectedItem = (IPackingListItem)item.Tag;
+
+
+
+        //selectedItem.Name = txtNameOfTheItem.Text;
+
+        //if (selectedItem is OtherItem)
+        //{
+        //    OtherItem otherItem = (OtherItem)selectedItem;
+
+        //    bool 
+
+        //    otherItem.Quantity = 
+        //}
+        //else if (selectedItem is TravelDocument)
+        //{
+
+        //}
     }
 
     private void cbCountries_SelectionChanged(object sender, SelectionChangedEventArgs e)
