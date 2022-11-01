@@ -126,8 +126,6 @@ public partial class TravelDetailsWindow : Window
         datePickerStartDate.IsEnabled = true;
         datePickerEndDate.IsEnabled = true;
         lvPackingList.IsEnabled = true;
-        txtNameOfTheItem.IsEnabled = true;
-        txtQuantity.IsEnabled = true;
         btnEdit.IsEnabled = false;
         btnSave.IsEnabled = true;
     }
@@ -290,6 +288,8 @@ public partial class TravelDetailsWindow : Window
         {
             chbDocument.Visibility = Visibility.Hidden;
             chbRequired.Visibility = Visibility.Hidden;
+            txtNameOfTheItem.IsEnabled = true;
+            txtQuantity.IsEnabled = true;
 
             OtherItem otherItem = (OtherItem)selectedItem;
             txtQuantity.Text = otherItem.Quantity.ToString();
@@ -301,6 +301,8 @@ public partial class TravelDetailsWindow : Window
             chbDocument.Visibility = Visibility.Visible;
             chbRequired.Visibility = Visibility.Visible;
             chbDocument.IsChecked = true;
+            chbDocument.IsEnabled = true;
+            chbRequired.IsEnabled = true;
 
             TravelDocument  travelDocumnet = (TravelDocument)selectedItem;
 
