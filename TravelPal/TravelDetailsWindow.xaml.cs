@@ -301,7 +301,7 @@ public partial class TravelDetailsWindow : Window
                 txtQuantity.Visibility = Visibility.Hidden;
                 chbDocument.Visibility = Visibility.Visible;
                 chbRequired.Visibility = Visibility.Visible;
-                chbDocument.IsEnabled = true;
+                txtNameOfTheItem.IsEnabled = true;
                 chbRequired.IsEnabled = true;
                 chbDocument.IsChecked = true;
 
@@ -324,70 +324,64 @@ public partial class TravelDetailsWindow : Window
     private void btnEditItem_Click(object sender, RoutedEventArgs e)
     {
         ListViewItem item = (ListViewItem)lvPackingList.SelectedItem;
-
-        IPackingListItem selectedItem = (IPackingListItem)item.Tag;
-
-        string newName = txtNameOfTheItem.Text;
-
-        try
+        
+        if(item is not null)
         {
-            if (string.IsNullOrWhiteSpace(newName))
-            {
-                throw new ArgumentException("Type in the name of the item");
-            }
-            else if (chbDocument.IsChecked is true)
-            {
-                TravelDocument travelDocument = (TravelDocument)selectedItem;
-                travelDocument.Name = newName;
+            IPackingListItem selectedItem = (IPackingListItem)item.Tag;
 
-                if (chbRequired.IsChecked is true)
-                {
-                    travelDocument.Required = true;
-                }
-            }
-            else if (chbDocument.IsChecked is false)
+            string newName = txtNameOfTheItem.Text;
+
+            try
             {
-                bool isQuantityAnInteger = int.TryParse(txtQuantity.Text, out int quantity);
+                if (string.IsNullOrWhiteSpace(newName))
+                {
+                    throw new ArgumentException("Type in the name of the item");
+                }
+                else if (chbDocument.IsChecked is true)
+                {
+                    TravelDocument travelDocument = (TravelDocument)selectedItem;
+                    travelDocument.Name = newName;
 
-                if (isQuantityAnInteger)
-                {
-                    OtherItem otherItem = (OtherItem)selectedItem;
-                    otherItem.Name = newName;
-                    otherItem.Quantity = quantity;
+                    if (chbRequired.IsChecked is true)
+                    {
+                        travelDocument.Required = true;
+                    }
+                    else
+                    {
+                        travelDocument.Required = false;
+                    }
                 }
-                else
+                else if (chbDocument.IsChecked is false)
                 {
-                    throw new ArgumentException("Type in the quantity of the item");
+                    bool isQuantityAnInteger = int.TryParse(txtQuantity.Text, out int quantity);
+
+                    if (isQuantityAnInteger)
+                    {
+                        OtherItem otherItem = (OtherItem)selectedItem;
+                        otherItem.Name = newName;
+                        otherItem.Quantity = quantity;
+                    }
+                    else
+                    {
+                        throw new ArgumentException("Type in the quantity of the item");
+                    }
                 }
+
+                btnEditItem.IsEnabled = false;
+                lvPackingList.SelectedItem = null;
+                txtNameOfTheItem.Text = "";
+                txtQuantity.Text = "";
+                chbDocument.IsChecked = false;
+                chbRequired.IsChecked = false;
+
+                PopulateListView();
             }
-
-            PopulateListView();
+            catch (ArgumentException ex)
+            {
+                MessageBox.Show(ex.Message, "Error");
+            }
         }
-        catch (ArgumentException ex)
-        {
-            MessageBox.Show(ex.Message, "Error");
-        }
 
-        //ListViewItem item = (ListViewItem)lvPackingList.SelectedItem;
-
-        //IPackingListItem selectedItem = (IPackingListItem)item.Tag;
-
-
-
-        //selectedItem.Name = txtNameOfTheItem.Text;
-
-        //if (selectedItem is OtherItem)
-        //{
-        //    OtherItem otherItem = (OtherItem)selectedItem;
-
-        //    bool 
-
-        //    otherItem.Quantity = 
-        //}
-        //else if (selectedItem is TravelDocument)
-        //{
-
-        //}
     }
 
     private void cbCountries_SelectionChanged(object sender, SelectionChangedEventArgs e)
