@@ -16,7 +16,7 @@
             <ColumnDefinition Width="5*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="40"/>
+            <RowDefinition Height="35"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
@@ -38,7 +38,7 @@
                 Content="Destination"
                 Foreground="MediumSlateBlue"
                 HorizontalAlignment="Left"
-                Margin="18,-5,0,0"
+                Margin="18,-9,0,0"
                 FontSize="16"
                 FontWeight="SemiBold"/>
             <TextBox 
@@ -110,6 +110,7 @@
                 x:Name="datePickerStartDate"
                 Width="200"
                 Foreground="MediumSlateBlue"
+                BorderThickness="2"
                 SelectedDateChanged="datePickerStartDate_SelectedDateChanged"/>
             <Label 
                 Content="End Date"
@@ -122,13 +123,14 @@
                 x:Name="datePickerEndDate"
                 Width="200"
                 Foreground="MediumSlateBlue"
+                BorderThickness="2"
                 SelectedDateChanged="datePickerEndDate_SelectedDateChanged"/>
             <Label
                 x:Name="lblTravelDays"
                 Content=""
                 Foreground="MediumSlateBlue"
                 HorizontalAlignment="Left"
-                Margin="18,-5,0,0"
+                Margin="18,0,0,0"
                 FontSize="16"
                 FontWeight="SemiBold"/>
             <Button

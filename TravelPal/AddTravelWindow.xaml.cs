@@ -294,7 +294,10 @@ public partial class AddTravelWindow : Window
 
     private void datePickerEndDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
     {
-        int travelDays = travelManager.CalculateTravelDays((DateTime)datePickerStartDate.SelectedDate, (DateTime)datePickerEndDate.SelectedDate);
-        lblTravelDays.Content = $"Number of travel days: {travelDays}";
+        if (datePickerStartDate.SelectedDate is not null)
+        {
+            int travelDays = travelManager.CalculateTravelDays((DateTime)datePickerStartDate.SelectedDate, (DateTime)datePickerEndDate.SelectedDate);
+            lblTravelDays.Content = $"Number of travel days: {travelDays}";
+        }
     }
 }

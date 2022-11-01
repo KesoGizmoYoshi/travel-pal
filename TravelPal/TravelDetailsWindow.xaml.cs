@@ -38,6 +38,17 @@ public partial class TravelDetailsWindow : Window
         this.travelsWindow = travelsWindow;
         this.currentTravel = travel;
 
+        if (userManager.SignedInUser.IsAdmin)
+        {
+            btnEdit.IsEnabled = false;
+        }
+
+        PopulateFields();
+
+    }
+
+    private void PopulateFields()
+    {
         txtDestination.Text = this.currentTravel.Destination;
 
         cbCountries.ItemsSource = Enum.GetNames(typeof(Countries));
@@ -45,7 +56,7 @@ public partial class TravelDetailsWindow : Window
 
         txtTravelers.Text = this.currentTravel.Travellers.ToString();
 
-        cbTravelType.ItemsSource = new[]{ "Trip", "Vacation"};
+        cbTravelType.ItemsSource = new[] { "Trip", "Vacation" };
 
         cbTripType.ItemsSource = Enum.GetNames(typeof(TripTypes));
 
@@ -53,14 +64,6 @@ public partial class TravelDetailsWindow : Window
         datePickerEndDate.Text = this.currentTravel.EndDate.ToString();
 
         lblTravelDays.Content = $"Number of travel days: {this.currentTravel.TravelDays}";
-
-        foreach(IPackingListItem packingListItem in this.currentTravel.PackingList) 
-        {
-            ListViewItem item = new();
-            item.Content = packingListItem.GetInfo();
-            item.Tag = packingListItem;
-            lvPackingList.Items.Add(item);
-        }
 
         if (this.currentTravel is Trip)
         {
@@ -82,9 +85,27 @@ public partial class TravelDetailsWindow : Window
                 chbAllInclusive.IsChecked = true;
             }
 
-            cbTripType.Visibility = Visibility.Collapsed; 
+            cbTripType.Visibility = Visibility.Collapsed;
         }
 
+        PopulateListView();
+    }
+
+    private void PopulateListView()
+    {
+        lvPackingList.Items.Clear();
+
+        foreach (IPackingListItem packingListItem in this.currentTravel.PackingList)
+        {
+            ListViewItem item = new();
+            item.Content = packingListItem.GetInfo();
+            item.Tag = packingListItem;
+            if (packingListItem.Name.Equals("Passport"))
+            {
+                item.IsEnabled = false;
+            }
+            lvPackingList.Items.Add(item);
+        }
     }
 
     private void btnCancel_Click(object sender, RoutedEventArgs e)
@@ -106,7 +127,7 @@ public partial class TravelDetailsWindow : Window
         lvPackingList.IsEnabled = true;
         txtNameOfTheItem.IsEnabled = true;
         txtQuantity.IsEnabled = true;
-
+    
 
         btnSave.IsEnabled = true;
     }
@@ -278,9 +299,16 @@ public partial class TravelDetailsWindow : Window
         {
             chbDocument.Visibility = Visibility.Hidden;
             chbRequired.Visibility = Visibility.Hidden;
-            OtherItem otherItem = (OtherItem)selectedItem;
 
+            OtherItem otherItem = (OtherItem)selectedItem;
             txtQuantity.Text = otherItem.Quantity.ToString();
+        }
+        else if(selectedItem is TravelDocument) 
+        {
+            txtQuantity.Visibility = Visibility.Hidden;
+            chbDocument.Visibility = Visibility.Visible;
+            chbRequired.Visibility = Visibility.Visible;
+
         }
 
     }
@@ -292,8 +320,35 @@ public partial class TravelDetailsWindow : Window
         IPackingListItem selectedItem = (IPackingListItem)item.Tag;
 
         selectedItem.Name = txtNameOfTheItem.Text;
-        
 
+        // TODO quantity and so on ...
+    }
 
+    private void cbCountries_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        bool IsUserLocatedInEu = Enum.IsDefined(typeof(EuropeanCountries), userManager.SignedInUser.Location.ToString()); // true, if user live in Eu
+        bool IsDestinationCountryInEu = Enum.IsDefined(typeof(EuropeanCountries), cbCountries.SelectedItem); // true, if destination country is in EU
+        bool isRequired;
+
+        if (IsUserLocatedInEu && !IsDestinationCountryInEu)
+        {
+            isRequired = true;
+        }
+        else if (IsUserLocatedInEu && IsDestinationCountryInEu)
+        {
+            isRequired = false;
+        }
+        else
+        {
+            isRequired = true;
+        }
+
+        if (currentTravel.PackingList[0] is TravelDocument)
+        {
+            TravelDocument travelDocument = (TravelDocument)currentTravel.PackingList[0];
+            travelDocument.Required = isRequired;
+        }
+
+        PopulateListView();
     }
 }
