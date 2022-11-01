@@ -43,6 +43,8 @@ public partial class AddTravelWindow : Window
 
         signedInUser = (User)this.userManager.SignedInUser;
 
+        datePickerStartDate.BlackoutDates.Add(new CalendarDateRange(DateTime.MinValue, DateTime.Today));
+
         PopulateAllComboBoxes();
     }
 
@@ -87,19 +89,6 @@ public partial class AddTravelWindow : Window
                 index++;
             }
 
-            string strTripType = (string)cbTripType.SelectedItem;
-
-            TripTypes tripType;
-
-            if (string.IsNullOrWhiteSpace(strTripType))
-            {
-                throw new ArgumentException(errorMessages[4]);
-            }
-            else
-            {
-                tripType = (TripTypes)Enum.Parse(typeof(TripTypes), strTripType);
-            }
-
             Countries country = (Countries)Enum.Parse(typeof(Countries), strCountry);
 
             DateTime startDate;
@@ -134,6 +123,19 @@ public partial class AddTravelWindow : Window
 
             if (travelType.Equals("Trip"))
             {
+                string strTripType = (string)cbTripType.SelectedItem;
+
+                TripTypes tripType;
+
+                if (string.IsNullOrWhiteSpace(strTripType))
+                {
+                    throw new ArgumentException(errorMessages[4]);
+                }
+                else
+                {
+                    tripType = (TripTypes)Enum.Parse(typeof(TripTypes), strTripType);
+                }
+
                 signedInUser.Travels.Add(travelManager.AddTravel(destination, country, travellers, packingList, startDate, endDate, tripType));
             }
             else if (travelType.Equals("Vacation"))
@@ -289,7 +291,8 @@ public partial class AddTravelWindow : Window
         {
             int travelDays = travelManager.CalculateTravelDays((DateTime)datePickerStartDate.SelectedDate, (DateTime)datePickerEndDate.SelectedDate);
             lblTravelDays.Content = $"Number of travel days: {travelDays}";
-        } 
+        }
+        datePickerEndDate.BlackoutDates.Add(new CalendarDateRange(DateTime.MinValue, (DateTime)datePickerStartDate.SelectedDate));
     }
 
     private void datePickerEndDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
