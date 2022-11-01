@@ -19,6 +19,6 @@ public class Vacation : Travel
 
     public override string GetInfo()
     {
-        return $"{base.Destination}";
+        return $"Destination: {base.Destination}\t Length of travel: {base.TravelDays} days";
     }
 }

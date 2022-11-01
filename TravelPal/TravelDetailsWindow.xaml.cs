@@ -300,15 +300,19 @@ public partial class TravelDetailsWindow : Window
             txtQuantity.Visibility = Visibility.Hidden;
             chbDocument.Visibility = Visibility.Visible;
             chbRequired.Visibility = Visibility.Visible;
-            chbDocument.IsChecked = true;
             chbDocument.IsEnabled = true;
             chbRequired.IsEnabled = true;
+            chbDocument.IsChecked = true;
 
             TravelDocument  travelDocumnet = (TravelDocument)selectedItem;
 
             if (travelDocumnet.Required)
             {
                 chbRequired.IsChecked = true;
+            }
+            else
+            {
+                chbRequired.IsChecked = false;
             }
         }
     }
