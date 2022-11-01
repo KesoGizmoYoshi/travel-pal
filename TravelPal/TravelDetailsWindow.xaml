@@ -138,9 +138,10 @@
                 IsEnabled="False"/>
             <Label 
                 x:Name="lblTravelDays"
+                Content=""
                 Foreground="MediumSlateBlue"
                 HorizontalAlignment="Left"
-                Margin="18,-5,0,0"
+                Margin="18,0,0,0"
                 FontSize="16"
                 FontWeight="SemiBold"/>
         </StackPanel>

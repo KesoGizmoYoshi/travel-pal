@@ -71,7 +71,7 @@ public partial class AddTravelWindow : Window
                 "Select a start date, have to be todays date or later",
                 "Select a end date, have to be a date later then the start date",
                 "Number of travellers must be an integer"
-            };
+        };
 
         int index = 0;
 

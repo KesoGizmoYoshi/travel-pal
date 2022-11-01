@@ -127,8 +127,7 @@ public partial class TravelDetailsWindow : Window
         lvPackingList.IsEnabled = true;
         txtNameOfTheItem.IsEnabled = true;
         txtQuantity.IsEnabled = true;
-    
-
+        btnEdit.IsEnabled = false;
         btnSave.IsEnabled = true;
     }
 
@@ -139,8 +138,6 @@ public partial class TravelDetailsWindow : Window
         string newStrTravellers = txtTravelers.Text;
         string newTravelType = (string)cbTravelType.SelectedItem;
         string newTripType = (string)cbTripType.SelectedItem;
-        //string newStrStartDate = datePickerStartDate.Text;
-        //string newStrEndDate = datePickerEndDate.Text;
 
         try
         {
@@ -183,7 +180,7 @@ public partial class TravelDetailsWindow : Window
 
             int travelDays = travelManager.CalculateTravelDays(newStartDate, newEndDate);
 
-            if (cbTravelType.SelectedItem.ToString() != currentTravel.GetType().ToString())
+            if (!newTravelType.Equals(this.currentTravel.GetType().Name)) 
             {
                 if (currentTravel is Trip)
                 {
@@ -207,7 +204,7 @@ public partial class TravelDetailsWindow : Window
                         isAllInclusive = false;
                     }
 
-                    user.Travels.Add(travelManager.AddTravel(newDestination, (Countries)Enum.Parse(typeof(Countries), newCountry), newTravellers, currentTravel.PackingList, newStartDate, newEndDate, isAllInclusive));
+                    user.Travels.Add(travelManager.AddTravel(newDestination, (Countries)Enum.Parse(typeof(Countries), newCountry), newTravellers, this.currentTravel.PackingList, newStartDate, newEndDate, isAllInclusive));
 
                     travelsWindow.DisplayTravels();
                     Close();
@@ -223,13 +220,13 @@ public partial class TravelDetailsWindow : Window
                     travelManager.RemoveTravel(vacation);
                     user.Travels.Remove(vacation);
 
-                    user.Travels.Add(travelManager.AddTravel(newDestination, (Countries)Enum.Parse(typeof(Countries), newCountry), newTravellers, currentTravel.PackingList, newStartDate, newEndDate, (TripTypes)Enum.Parse(typeof(TripTypes), cbTripType.SelectedIndex.ToString())));
+                    user.Travels.Add(travelManager.AddTravel(newDestination, (Countries)Enum.Parse(typeof(Countries), newCountry), newTravellers, this.currentTravel.PackingList, newStartDate, newEndDate, (TripTypes)Enum.Parse(typeof(TripTypes), cbTripType.SelectedIndex.ToString())));
 
                     travelsWindow.DisplayTravels();
                     Close();
                 }
             }
-            else if(cbTravelType.SelectedItem.ToString() == currentTravel.GetType().ToString())
+            else if(newTravelType == this.currentTravel.GetType().Name) 
             {
                 if (currentTravel is Trip)
                 {
@@ -256,8 +253,8 @@ public partial class TravelDetailsWindow : Window
                 this.currentTravel.Travellers = newTravellers;
                 this.currentTravel.StartDate = newStartDate;
                 this.currentTravel.EndDate = newEndDate;
-
                 this.currentTravel.TravelDays = travelManager.CalculateTravelDays(newStartDate, newEndDate);
+                
 
                 travelsWindow.DisplayTravels();
                 Close();
@@ -350,5 +347,23 @@ public partial class TravelDetailsWindow : Window
         }
 
         PopulateListView();
+    }
+
+    private void datePickerStartDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (datePickerEndDate.SelectedDate is not null)
+        {
+            int travelDays = travelManager.CalculateTravelDays((DateTime)datePickerStartDate.SelectedDate, (DateTime)datePickerEndDate.SelectedDate);
+            lblTravelDays.Content = $"Number of travel days: {travelDays}";
+        }
+    }
+
+    private void datePickerEndDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (datePickerStartDate.SelectedDate is not null)
+        {
+            int travelDays = travelManager.CalculateTravelDays((DateTime)datePickerStartDate.SelectedDate, (DateTime)datePickerEndDate.SelectedDate);
+            lblTravelDays.Content = $"Number of travel days: {travelDays}";
+        }
     }
 }
