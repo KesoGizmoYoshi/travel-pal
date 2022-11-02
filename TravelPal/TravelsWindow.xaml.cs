@@ -63,7 +63,17 @@ public partial class TravelsWindow : Window
             {
                 ListViewItem item = new();
                 item.Tag = travel;
-                item.Content = travel.GetInfo();
+
+                if (travel.IsRemovedByUser)
+                {
+                    string test = $"{travel.GetInfo()}\tRemoved by user";
+                    item.Content = test;
+                }
+                else
+                {
+                    item.Content = travel.GetInfo();
+                }
+
                 lvTravels.Items.Add(item);
             }
         }
@@ -114,7 +124,7 @@ public partial class TravelsWindow : Window
 
                 foreach(Travel travel in travelManager.Travels)
                 {
-                    if (travelManager.Travels.Equals(selectedTravel))
+                    if (travel.Equals(selectedTravel))
                     {
                         travel.IsRemovedByUser = true;
                     }
@@ -170,5 +180,15 @@ public partial class TravelsWindow : Window
         {
             selectedTravel = (Travel)selectedItem.Tag;
         }
+    }
+
+    private void btnAbout_Click(object sender, RoutedEventArgs e)
+    {
+        string infoMessage = "Dear User! Welcome to TravelPal!" +
+            "\nYour new favorite app for managing your travels." +
+            "\nYou can add, edit and remove travels." +
+            "\nWe do not offer any support not even any useful tool tips." +
+            "\nSo you are completely on your own, but thanks again for using TravelPal";
+        MessageBox.Show(infoMessage, "About", MessageBoxButton.OK, MessageBoxImage.Information);
     }
 }
