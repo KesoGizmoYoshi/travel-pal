@@ -34,13 +34,6 @@ public partial class MainWindow : Window
         userManager.LoadDefaultUsers(travelManager);
     }
 
-    //public MainWindow(UserManager userManager)
-    //{
-    //    InitializeComponent();
-
-    //    this.userManager = userManager;
-    //}
-
     public MainWindow(UserManager userManager, TravelManager travelManager)
     {
         InitializeComponent();

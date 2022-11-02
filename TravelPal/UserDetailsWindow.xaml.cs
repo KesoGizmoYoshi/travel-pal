@@ -50,27 +50,52 @@ public partial class UserDetailsWindow : Window
         string newConfirmPassword = pwConfirmPassword.Password;
 
         Countries newLocation = (Countries)Enum.Parse(typeof(Countries), cbCountries.SelectedItem.ToString());
-        
+
+        bool updatePassword = false;
+        bool updateUsername = false;
+
         try
         {
             if (newUsername.Length < 3)
             {
                 throw new ArgumentException("Username most be 3 or more characters.");
             }
-
-            bool isUsernameUpdated = userManager.UpdateUsername(signedInUser, newUsername);
-            
-            //bool isPasswordUpdated = UpdatePassword(newPassword, newConfirmPassword);
-
-            if (!isUsernameUpdated && !signedInUser.Username.Equals(newUsername))
+            else
             {
-                throw new ArgumentException("Username does already exist.");
+                updateUsername = true;
             }
-            else if(isUsernameUpdated) 
+
+            if (newPassword.Length > 4)
             {
-                signedInUser.Location = newLocation;
-                travelsWindow.UpdateUsernameLabel();
-                Close();
+                if (newPassword.Equals(newConfirmPassword))
+                {
+                    updatePassword = true;
+                }
+                else
+                {
+                    throw new ArgumentException("Password does not match.");
+                }
+            }
+            else
+            {
+                throw new ArgumentException("Password must be at least 5 characters.");
+            }
+
+            if (updatePassword && updateUsername)
+            {
+                bool isUsernameUpdated = userManager.UpdateUsername(signedInUser, newUsername);
+
+                if (!isUsernameUpdated && !signedInUser.Username.Equals(newUsername))
+                {
+                    throw new ArgumentException("Username does already exist.");
+                }
+                else
+                {
+                    signedInUser.Location = newLocation;
+                    signedInUser.Password = newPassword;
+                    travelsWindow.UpdateUsernameLabel();
+                    Close();
+                }
             }
         }
         catch (ArgumentException ex)
@@ -78,45 +103,6 @@ public partial class UserDetailsWindow : Window
             lblErrorMessage.Content = ex.Message;
             lblErrorMessage.Visibility = Visibility.Visible;
         }
-        //try
-        //{
-        //    if(!signedInUser.Username.Equals(newUsername))
-        //    {
-        //        if (newUsername.Length < 3)
-        //        {
-        //            throw new ArgumentException("Username most be 3 or more characters.");
-        //        }
-        //        else
-        //        {
-        //            bool isUsernameUpdated = userManager.UpdateUsername(signedInUser, newUsername);
-
-        //            if (isUsernameUpdated)
-        //            {
-        //                travelsWindow.UpdateUsernameLabel();
-        //                Close();
-        //            }
-        //            else
-        //            {
-        //                throw new ArgumentException("Username does already exist.");
-        //            }
-        //        }
-        //    }
-
-        //    if (!string.IsNullOrWhiteSpace(newPassword))
-        //    {
-        //        bool isPasswordUpdated = UpdatePassword(newPassword, newConfirmPassword);
-
-        //        if (isPasswordUpdated)
-        //        {
-        //            Close();
-        //        }
-        //    }
-        //}
-        //catch (ArgumentException ex)
-        //{
-        //    lblErrorMessage.Content = ex.Message;
-        //    lblErrorMessage.Visibility = Visibility.Visible;
-        //}
     }
 
     private bool UpdatePassword(string newPassword, string newConfirmPassword)
