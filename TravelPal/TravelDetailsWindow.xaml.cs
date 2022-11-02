@@ -47,6 +47,8 @@ public partial class TravelDetailsWindow : Window
         PopulateCommonFields();
         PopulateTravelTypeFields();
         PopulateListView();
+
+        datePickerStartDate.BlackoutDates.Add(new CalendarDateRange(DateTime.MinValue, DateTime.Today));
     }
 
     private void PopulateCommonFields()
@@ -201,7 +203,7 @@ public partial class TravelDetailsWindow : Window
 
                     user.Travels.Add(travelManager.AddTravel(newDestination, (Countries)Enum.Parse(typeof(Countries), newCountry), newTravellers, this.currentTravel.PackingList, newStartDate, newEndDate, isAllInclusive));
 
-                    travelsWindow.DisplayTravels();
+                    this.travelsWindow.DisplayTravels();
                     Close();
                 }
                 else if (currentTravel is Vacation)
@@ -419,11 +421,15 @@ public partial class TravelDetailsWindow : Window
 
     private void datePickerStartDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
     {
+        string test = "test";
+
         if (datePickerEndDate.SelectedDate is not null)
         {
             int travelDays = travelManager.CalculateTravelDays((DateTime)datePickerStartDate.SelectedDate, (DateTime)datePickerEndDate.SelectedDate);
             lblTravelDays.Content = $"Number of travel days: {travelDays}";
         }
+
+        datePickerEndDate.BlackoutDates.Add(new CalendarDateRange(DateTime.MinValue, (DateTime)datePickerStartDate.SelectedDate));
     }
 
     private void datePickerEndDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)

@@ -27,7 +27,7 @@ public class TravelDocument : IPackingListItem
             required = "Yes";
         }
 
-        return $"{Name}\tRequired: {required}";
+        return $"{Name}\t\tRequired: {required}";
     }
 
 }

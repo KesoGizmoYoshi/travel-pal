@@ -122,7 +122,8 @@
                 Width="200"
                 Foreground="MediumSlateBlue"
                 BorderThickness="2"
-                IsEnabled="False"/>
+                IsEnabled="False"
+                SelectedDateChanged="datePickerStartDate_SelectedDateChanged"/>
             <Label 
                 Content="End Date"
                 Foreground="MediumSlateBlue"
@@ -135,7 +136,8 @@
                 Width="200"
                 Foreground="MediumSlateBlue"
                 BorderThickness="2"
-                IsEnabled="False"/>
+                IsEnabled="False"
+                SelectedDateChanged="datePickerEndDate_SelectedDateChanged"/>
             <Label 
                 x:Name="lblTravelDays"
                 Content=""

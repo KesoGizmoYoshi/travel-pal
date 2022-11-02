@@ -286,21 +286,29 @@ public partial class AddTravelWindow : Window
     }
 
     private void datePickerStartDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
-    {   
-        if(datePickerEndDate.SelectedDate is not null)
+    {
+        datePickerEndDate.SelectedDate = null;
+        datePickerEndDate.IsEnabled = true;
+
+        if (datePickerEndDate.SelectedDate is not null)
         {
+            
             int travelDays = travelManager.CalculateTravelDays((DateTime)datePickerStartDate.SelectedDate, (DateTime)datePickerEndDate.SelectedDate);
             lblTravelDays.Content = $"Number of travel days: {travelDays}";
         }
+
         datePickerEndDate.BlackoutDates.Add(new CalendarDateRange(DateTime.MinValue, (DateTime)datePickerStartDate.SelectedDate));
     }
 
     private void datePickerEndDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
     {
-        if (datePickerStartDate.SelectedDate is not null)
+        
+        if (datePickerStartDate.SelectedDate is not null && datePickerEndDate.SelectedDate is not null)
         {
             int travelDays = travelManager.CalculateTravelDays((DateTime)datePickerStartDate.SelectedDate, (DateTime)datePickerEndDate.SelectedDate);
             lblTravelDays.Content = $"Number of travel days: {travelDays}";
         }
+
+        datePickerEndDate.IsEnabled = false;
     }
 }
