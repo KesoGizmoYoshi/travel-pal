@@ -106,13 +106,35 @@ public partial class TravelsWindow : Window
     private void btnRemoveTravel_Click(object sender, RoutedEventArgs e)
     {
         if (selectedTravel != null)
-        {
-            travelManager.RemoveTravel(selectedTravel);
-            
+        {   
             if(!signedInUser.IsAdmin)
             {
                 User user = (User)signedInUser;
                 user.Travels.Remove(selectedTravel);
+
+                foreach(Travel travel in travelManager.Travels)
+                {
+                    if (travelManager.Travels.Equals(selectedTravel))
+                    {
+                        travel.IsRemovedByUser = true;
+                    }
+                }
+            }
+            else
+            {
+                foreach(IUser iUser in userManager.Users)
+                {
+                    if(iUser is User)
+                    {
+                        User user = (User)iUser;
+
+                        if(user.Travels.Contains(selectedTravel))
+                        {
+                            user.Travels.Remove(selectedTravel);
+                        }
+                    }
+                }
+                travelManager.RemoveTravel(selectedTravel);
             }
 
             selectedTravel = null;

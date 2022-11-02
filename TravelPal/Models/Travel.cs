@@ -17,6 +17,7 @@ public class Travel
     public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }
     public int TravelDays { get; set; }
+    public bool IsRemovedByUser { get; set; } = false;
 
     public Travel(string destination, Countries country, int travellers, List<IPackingListItem> packingList, DateTime startDate, DateTime endDate)
     {
@@ -26,6 +27,7 @@ public class Travel
         PackingList = packingList;
         StartDate = startDate;
         EndDate = endDate;
+        IsRemovedByUser = false;
 
         TravelDays = CalculateTravelDays();
     }
