@@ -257,8 +257,6 @@ public partial class TravelDetailsWindow : Window
         {
             MessageBox.Show(ex.Message, "Error");
         }
-
-
     }
 
     private void cbTravelType_SelectionChanged(object sender, SelectionChangedEventArgs e)

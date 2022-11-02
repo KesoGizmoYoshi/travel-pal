@@ -60,13 +60,13 @@ public partial class UserDetailsWindow : Window
 
             bool isUsernameUpdated = userManager.UpdateUsername(signedInUser, newUsername);
             
-            bool isPasswordUpdated = UpdatePassword(newPassword, newConfirmPassword);
+            //bool isPasswordUpdated = UpdatePassword(newPassword, newConfirmPassword);
 
             if (!isUsernameUpdated && !signedInUser.Username.Equals(newUsername))
             {
                 throw new ArgumentException("Username does already exist.");
             }
-            else 
+            else if(isUsernameUpdated) 
             {
                 signedInUser.Location = newLocation;
                 travelsWindow.UpdateUsernameLabel();

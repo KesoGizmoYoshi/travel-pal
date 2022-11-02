@@ -23,12 +23,14 @@ namespace TravelPal;
 /// </summary>
 public partial class RegisterWindow : Window
 {
-    private UserManager userManager = new();
-    public RegisterWindow(UserManager userManager)
+    private UserManager userManager;
+    private TravelManager travelManager;
+    public RegisterWindow(UserManager userManager, TravelManager travelManager)
     {
         InitializeComponent();
 
         this.userManager = userManager;
+        this.travelManager = travelManager;
 
         cbLocation.ItemsSource = Enum.GetNames(typeof(Countries));
     }
@@ -50,7 +52,11 @@ public partial class RegisterWindow : Window
             {
                 throw new ArgumentException("Type in a password");
             }
-            else if (!password.Equals(confirmPassword))
+            else if (password.Length < 5)
+            {
+                throw new ArgumentException("At least 5 chars (Password)");
+            }
+            else if (!password.Equals(confirmPassword) || password.Length < 5)
             {
                 throw new ArgumentException("Password is not matching");
             }
@@ -65,7 +71,7 @@ public partial class RegisterWindow : Window
 
             if(isUserAdded)
             {
-                MainWindow mainWindow = new MainWindow(this.userManager);
+                MainWindow mainWindow = new MainWindow(this.userManager, this.travelManager);
                 mainWindow.Show();
                 Close();
             }

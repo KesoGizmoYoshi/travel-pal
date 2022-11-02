@@ -193,6 +193,7 @@ public partial class AddTravelWindow : Window
 
             UpdateListViewForPackingItems();
 
+            // Fixa
             txtNameOfTheItem.Clear();
             txtQuantity.Clear();
             chbDocument.IsChecked = false;

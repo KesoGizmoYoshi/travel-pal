@@ -34,12 +34,12 @@ public partial class MainWindow : Window
         userManager.LoadDefaultUsers(travelManager);
     }
 
-    public MainWindow(UserManager userManager)
-    {
-        InitializeComponent();
+    //public MainWindow(UserManager userManager)
+    //{
+    //    InitializeComponent();
 
-        this.userManager = userManager;
-    }
+    //    this.userManager = userManager;
+    //}
 
     public MainWindow(UserManager userManager, TravelManager travelManager)
     {
@@ -60,7 +60,7 @@ public partial class MainWindow : Window
 
         if (isSignInSuccessful)
         {
-            TravelsWindow travelsWindow = new(userManager, travelManager);
+            TravelsWindow travelsWindow = new(this.userManager, this.travelManager);
             travelsWindow.Show();
             Close();
         }
@@ -72,7 +72,7 @@ public partial class MainWindow : Window
 
     private void btnRegister_Click(object sender, RoutedEventArgs e)
     {
-        RegisterWindow registerWindow = new(userManager);
+        RegisterWindow registerWindow = new(this.userManager, this.travelManager);
         registerWindow.Show();
         Close();
     }

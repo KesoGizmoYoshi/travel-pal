@@ -37,10 +37,6 @@ public class TravelManager
     public void RemoveTravel(Travel travelToRemove)
     {
         Travels.Remove(travelToRemove);
-
-        // TODO add more logic here
-
-        // ......
     }
     
     public int CalculateTravelDays(DateTime startDate, DateTime endDate)
@@ -49,14 +45,5 @@ public class TravelManager
     }
 }
 
-
-// TODO
-//
-//
-// Displaya hela listan för Admin och men spara även travels borttagna av användaren i huvudlistan, bool isDeleted to ha koll
-//
-
-
-// Add public method to calculate travelDays for displaying in the AddTravelWindows
 
 
