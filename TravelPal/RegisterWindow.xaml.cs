@@ -35,6 +35,11 @@ public partial class RegisterWindow : Window
         cbLocation.ItemsSource = Enum.GetNames(typeof(Countries));
     }
 
+    /// <summary>
+    /// Method for the Register-Button, adds a new user if the input data passes all the checks, if not an error message will be displayed for the failed check.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void btnRegister_Click(object sender, RoutedEventArgs e)
     {
         try
@@ -48,7 +53,7 @@ public partial class RegisterWindow : Window
             {
                 throw new ArgumentException("At least 3 chars (Username)");
             }
-            else if (string.IsNullOrEmpty(password) || string.IsNullOrEmpty(confirmPassword)) 
+            else if (string.IsNullOrEmpty(password)) //|| string.IsNullOrEmpty(confirmPassword)) 
             {
                 throw new ArgumentException("Type in a password");
             }
@@ -56,7 +61,7 @@ public partial class RegisterWindow : Window
             {
                 throw new ArgumentException("At least 5 chars (Password)");
             }
-            else if (!password.Equals(confirmPassword) || password.Length < 5)
+            else if (!password.Equals(confirmPassword)) //|| password.Length < 5)
             {
                 throw new ArgumentException("Password is not matching");
             }

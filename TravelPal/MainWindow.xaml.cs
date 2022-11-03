@@ -42,10 +42,13 @@ public partial class MainWindow : Window
         this.travelManager = travelManager;
     }
 
+    /// <summary>
+    /// Method for the SignIn-button: Successful sign in -> Opens TravelWindow and closes MainWindow, Unsuccessful sing in -> Displays error message
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void btnSignIn_Click(object sender, RoutedEventArgs e)
     {
-        List<IUser> users = userManager.Users;
-
         string username = txtUsername.Text;
         string password = pwPassword.Password;
 
@@ -63,6 +66,11 @@ public partial class MainWindow : Window
         }
     }
 
+    /// <summary>
+    /// Method for the Register-button, opens the RegisterWindow and closes the MainWindow 
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void btnRegister_Click(object sender, RoutedEventArgs e)
     {
         RegisterWindow registerWindow = new(this.userManager, this.travelManager);
