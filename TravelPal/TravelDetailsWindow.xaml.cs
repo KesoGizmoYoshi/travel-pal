@@ -30,6 +30,7 @@ public partial class TravelDetailsWindow : Window
     private TravelManager travelManager;
     private TravelsWindow travelsWindow;
     private Travel currentTravel;
+
     public TravelDetailsWindow(UserManager userManager, TravelManager travelManager, TravelsWindow travelsWindow, Travel travel)
     {
         InitializeComponent();
@@ -51,6 +52,9 @@ public partial class TravelDetailsWindow : Window
         datePickerStartDate.BlackoutDates.Add(new CalendarDateRange(DateTime.MinValue, DateTime.Today));
     }
 
+    /// <summary>
+    /// Populates all fields that are not specific to one of the travel types.
+    /// </summary>
     private void PopulateCommonFields()
     {
         txtDestination.Text = this.currentTravel.Destination;
@@ -62,6 +66,9 @@ public partial class TravelDetailsWindow : Window
         lblTravelDays.Content = $"Number of travel days: {this.currentTravel.TravelDays}";
     }
 
+    /// <summary>
+    /// Populates the fields that are specific to the travel type, hides UI elements that are not needed.
+    /// </summary>
     private void PopulateTravelTypeFields()
     {
         cbTravelType.ItemsSource = new[] { "Trip", "Vacation" };
@@ -91,6 +98,9 @@ public partial class TravelDetailsWindow : Window
         }
     }
 
+    /// <summary>
+    /// Method for populating the ListView with the items in the packing list. Disables the passport to be manually edited.
+    /// </summary>
     private void PopulateListView()
     {
         lvPackingList.Items.Clear();
@@ -110,11 +120,21 @@ public partial class TravelDetailsWindow : Window
         }
     }
 
+    /// <summary>
+    /// Method for the Cancel-button, Closes TravelDetailsWindow
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void btnCancel_Click(object sender, RoutedEventArgs e)
     {
         Close();
     }
 
+    /// <summary>
+    /// Method for the Edit-button, basically just sets all relevant UI elements to enabled for the user to be able to edit.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void btnEdit_Click(object sender, RoutedEventArgs e)
     {
         txtDestination.IsEnabled = true;
@@ -127,10 +147,16 @@ public partial class TravelDetailsWindow : Window
         datePickerStartDate.IsEnabled = true;
         datePickerEndDate.IsEnabled = true;
         lvPackingList.IsEnabled = true;
-        btnEdit.IsEnabled = false;
         btnSave.IsEnabled = true;
+        btnEdit.IsEnabled = false;
     }
 
+    /// <summary>
+    /// Method for the Save-button, saves all the changes done by the user, if the input passes all the checks in place.
+    /// Its even possible to switch between Trip/Vacation. Possible by removing the object and then recreating it with the new travel type.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void btnSave_Click(object sender, RoutedEventArgs e)
     {
         string newDestination = txtDestination.Text;
@@ -259,6 +285,11 @@ public partial class TravelDetailsWindow : Window
         }
     }
 
+    /// <summary>
+    /// Method for the selecting travel type in the ComboBox, makes sure that the correct UI elements are visible depending on which trip type that is selected.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void cbTravelType_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         if (cbTravelType.SelectedItem.ToString().Equals("Trip"))
@@ -321,6 +352,14 @@ public partial class TravelDetailsWindow : Window
         
     }
 
+    /// <summary>
+    /// Method for the EditItem-button, lets the user edit the item selected in the ListView.
+    /// It is not possible to edit a TravelDocument to OtherItem and vice versa.
+    /// The passport can not be changed by the user, its automatically updated when changing country.
+    /// Error messages will be displayed if any check fails. The ListView updates after an item have been added.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void btnEditItem_Click(object sender, RoutedEventArgs e)
     {
         ListViewItem item = (ListViewItem)lvPackingList.SelectedItem;
@@ -384,6 +423,12 @@ public partial class TravelDetailsWindow : Window
 
     }
 
+    /// <summary>
+    /// Method for selecting country in the ComboBox. It displays the passport in the ListView.
+    /// If the user decides to change country, then the passport will automatically have the required setting updated to reflect the new country.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void cbCountries_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         bool IsUserLocatedInEu = Enum.IsDefined(typeof(EuropeanCountries), userManager.SignedInUser.Location.ToString()); // true, if user live in Eu

@@ -48,6 +48,9 @@ public partial class AddTravelWindow : Window
         PopulateAllComboBoxes();
     }
 
+    /// <summary>
+    /// Method for populating all the ComboBoxes with values
+    /// </summary>
     private void PopulateAllComboBoxes()
     {
         cbCountries.ItemsSource = Enum.GetNames(typeof(Countries));
@@ -55,6 +58,12 @@ public partial class AddTravelWindow : Window
         cbTripType.ItemsSource = Enum.GetNames(typeof(TripTypes));
     }
 
+    /// <summary>
+    /// Method for AddTravel-button, calling methods for adding a new Travel, Trip or Vacation depending on what the user have selected.
+    /// Plenty of checks for all the input data, error messages will be displayed if any check fails.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void btnAddTravel_Click(object sender, RoutedEventArgs e)
     {
         string destination = txtDestination.Text;
@@ -70,8 +79,8 @@ public partial class AddTravelWindow : Window
                 "Type in the number of travellers",
                 "Select a travel type",
                 "Select a trip type",
-                "Select a start date, have to be todays date or later",
-                "Select a end date, have to be a date later then the start date",
+                "Select a start date",
+                "Select a end date",
                 "Number of travellers must be an integer"
         };
 
@@ -154,6 +163,12 @@ public partial class AddTravelWindow : Window
         }
     }
 
+    /// <summary>
+    /// Method for the AddItem-button, add a new item to the packingList, checks for the input data. 
+    /// Error messages will be displayed if any check fails. The ListView updates after an item have been added.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void btnAddItem_Click(object sender, RoutedEventArgs e)
     {
         string name = txtNameOfTheItem.Text;
@@ -204,6 +219,11 @@ public partial class AddTravelWindow : Window
         }
     }
 
+    /// <summary>
+    /// Method for the Document CheckBox, makes sure that the correct UI elements are visible if its "Checked".
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void chbDocument_Checked(object sender, RoutedEventArgs e)
     {
         if (chbDocument.IsChecked is true)
@@ -214,6 +234,11 @@ public partial class AddTravelWindow : Window
         }
     }
 
+    /// <summary>
+    /// Method for the Document CheckBox, makes sure that the correct UI elements are visible if its "Unchecked".
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void chbDocument_Unchecked(object sender, RoutedEventArgs e)
     {
         if (chbDocument.IsChecked is false)
@@ -224,9 +249,13 @@ public partial class AddTravelWindow : Window
         }
     }
 
+    /// <summary>
+    /// Method for the selecting travel type in the ComboBox, makes sure that the correct UI elements are visible depending on which trip type that is selected.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void cbTravelType_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-
         if(cbTravelType.SelectedItem.ToString().Equals("Trip"))
         {
             cbTripType.Visibility = Visibility.Visible;
@@ -239,6 +268,13 @@ public partial class AddTravelWindow : Window
         }
     }
 
+    /// <summary>
+    /// Method for selecting country in the ComboBox, auto-generates a passport. 
+    /// Depending where the user is located and where the destination is located, it will set the passport as required or not.
+    /// If the user decides to change country, then the passport will automatically have the required setting updated to reflect the new country.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void cbCountries_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         bool IsUserLocatedInEu = Enum.IsDefined(typeof(EuropeanCountries), signedInUser.Location.ToString()); // true, if user live in Eu
@@ -272,6 +308,9 @@ public partial class AddTravelWindow : Window
         UpdateListViewForPackingItems();
     }
 
+    /// <summary>
+    /// Method for populating the ListView with the items in the packing list.
+    /// </summary>
     private void UpdateListViewForPackingItems()
     {
         lvPackingList.Items.Clear();
@@ -285,6 +324,12 @@ public partial class AddTravelWindow : Window
         }
     }
 
+    /// <summary>
+    /// Method for selecting an start date, calculates and displays the amount of travel days, if the user selected both start date and end date.
+    /// Also makes user the user the sure cant select an end date that is before the selected start date.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void datePickerStartDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
     {
         datePickerEndDate.SelectedDate = null;
@@ -300,9 +345,13 @@ public partial class AddTravelWindow : Window
         datePickerEndDate.BlackoutDates.Add(new CalendarDateRange(DateTime.MinValue, (DateTime)datePickerStartDate.SelectedDate));
     }
 
+    /// <summary>
+    /// Method for selecting an end date, calculates and displays the amount of travel days, if the user selected both start date and end date.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void datePickerEndDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
     {
-        
         if (datePickerStartDate.SelectedDate is not null && datePickerEndDate.SelectedDate is not null)
         {
             int travelDays = travelManager.CalculateTravelDays((DateTime)datePickerStartDate.SelectedDate, (DateTime)datePickerEndDate.SelectedDate);

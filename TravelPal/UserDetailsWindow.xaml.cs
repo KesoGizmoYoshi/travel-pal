@@ -43,6 +43,11 @@ public partial class UserDetailsWindow : Window
         pwConfirmPassword.Password = signedInUser.Password;     
     }
 
+    /// <summary>
+    /// Method for the Save-button, lets the user update (username, password, location) if the inputs passes the checks. Error messages will be displayed, if any check fails.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void btnSave_Click(object sender, RoutedEventArgs e)
     {
         string newUsername = txtUserName.Text;
@@ -105,27 +110,11 @@ public partial class UserDetailsWindow : Window
         }
     }
 
-    private bool UpdatePassword(string newPassword, string newConfirmPassword)
-    {
-        if (newPassword.Length > 4)
-        {
-            if (newPassword.Equals(newConfirmPassword))
-            {
-                signedInUser.Password = newPassword;
-
-                return true;
-            }
-            else
-            {
-                throw new ArgumentException("Password does not match.");
-            }
-        }
-        else
-        {
-            throw new ArgumentException("Password must be at least 5 characters.");
-        }
-    }
-
+    /// <summary>
+    /// Method for the Cancel-button, Closes the UserDetailsWindow.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void btnCancel_Click(object sender, RoutedEventArgs e)
     {
         Close();

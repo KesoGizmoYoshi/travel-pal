@@ -89,7 +89,6 @@ public partial class TravelsWindow : Window
     private void btnMyDetails_Click(object sender, RoutedEventArgs e)
     {
         UserDetailsWindow userDetailsWindow = new(userManager, this);
-
         userDetailsWindow.Show();
     }
 
@@ -180,7 +179,6 @@ public partial class TravelsWindow : Window
         {
             MessageBox.Show("No travel selected!", "Warning!");
         }
-
     }
 
     /// <summary>
@@ -193,7 +191,6 @@ public partial class TravelsWindow : Window
         if (!signedInUser.IsAdmin)
         {
             AddTravelWindow addTravelWindow = new(this.userManager, this.travelManager, this);
-
             addTravelWindow.Show();
         }
         else
@@ -219,7 +216,7 @@ public partial class TravelsWindow : Window
     }
 
     /// <summary>
-    /// Method of the About-button, just displaying a MessageBox with some info about TravelPal
+    /// Method for the About-button, just displaying a MessageBox with some info about TravelPal
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
