@@ -18,6 +18,10 @@ public class TravelDocument : IPackingListItem
         Required = required;
     }
 
+    /// <summary>
+    /// Method for returning a interpolated string with info about the document.
+    /// </summary>
+    /// <returns>The method returns a string.</returns>
     public string GetInfo()
     {
         string required = "No";
@@ -29,5 +33,4 @@ public class TravelDocument : IPackingListItem
 
         return $"{Name}\t\tRequired: {required}";
     }
-
 }

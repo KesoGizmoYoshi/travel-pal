@@ -17,6 +17,10 @@ public class Trip : Travel
         TripType = tripType;
     }
 
+    /// <summary>
+    /// Method for returning a interpolated string with info about the trip.
+    /// </summary>
+    /// <returns>The method returns a string.</returns>
     public override string GetInfo()
     {
         return $"Destination: {base.Destination}\t Length of travel: {base.TravelDays} days";

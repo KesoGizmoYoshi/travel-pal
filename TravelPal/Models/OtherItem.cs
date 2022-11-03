@@ -18,6 +18,10 @@ public class OtherItem : IPackingListItem
         Quantity = quantity;
     }
 
+    /// <summary>
+    /// Method for returning a interpolated string with info about the item.
+    /// </summary>
+    /// <returns>The method returns a string.</returns>
     public string GetInfo()
     {
         return $"{Name}\tQuantity: {Quantity}";

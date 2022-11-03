@@ -37,6 +37,10 @@ public class Travel
         return "";
     }
 
+    /// <summary>
+    /// Method for calculating travel days, by using the start date and the end date for a travel.
+    /// </summary>
+    /// <returns>This method returns an integer value of the amount of travel days</returns>
     private int CalculateTravelDays()
     {
         return (int)(EndDate - StartDate).TotalDays; ;

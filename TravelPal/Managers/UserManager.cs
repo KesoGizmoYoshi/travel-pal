@@ -15,6 +15,10 @@ public class UserManager
     public List<IUser> Users { get; set; } = new();
     public IUser SignedInUser { get; set; }
 
+    /// <summary>
+    /// Method for creating the required default users, admin and Gandalf. Also adding two travels with packing lists to Gandalf.
+    /// </summary>
+    /// <param name="travelManager"></param>
     public void LoadDefaultUsers(TravelManager travelManager)
     {
         Admin admin = new("admin", "password", Enums.Countries.Antarctica);
@@ -41,6 +45,11 @@ public class UserManager
         gandalf.Travels.Add(travelManager.AddTravel("Mallorca", Countries.Spain, 2, packingList2, new DateTime(2023, 07, 01), new DateTime(2023, 07, 14), true));
     }
 
+    /// <summary>
+    /// Method for adding a new user with an unique username to the Users list.
+    /// </summary>
+    /// <param name="userToAdd"></param>
+    /// <returns> The Method returns true if the user gets added, otherwise false.</returns>
     public bool AddUser(IUser userToAdd)
     {
         if (ValidateUsername(userToAdd.Username))
@@ -53,6 +62,12 @@ public class UserManager
         return false;
     }
 
+    /// <summary>
+    /// Method for updating the username for a user in the Users list.
+    /// </summary>
+    /// <param name="userToUpdate"></param>
+    /// <param name="newUsername"></param>
+    /// <returns>The Method returns true if the username gets updated, otherwise false.</returns>
     public bool UpdateUsername(IUser userToUpdate, string newUsername)
     {
         if (ValidateUsername(newUsername))
@@ -61,12 +76,15 @@ public class UserManager
 
             return true;
         }
-        else
-        {
-            return false;
-        }
+
+        return false;
     }
 
+    /// <summary>
+    /// Method for checking if a user with the username already exists in the Users list.
+    /// </summary>
+    /// <param name="username"></param>
+    /// <returns>The Method returns true if the username is not already used, otherwise false.</returns>
     private bool ValidateUsername(string username)
     {
         foreach (IUser user in Users)
@@ -80,6 +98,12 @@ public class UserManager
         return true;
     }
 
+    /// <summary>
+    /// Method for signing in the user, by checking if credentials is matching a user in the Users list.
+    /// </summary>
+    /// <param name="username"></param>
+    /// <param name="password"></param>
+    /// <returns>The method returns true if the credentials matches a user, otherwise false.</returns>
     public bool SignInUser(string username, string password)
     {
         foreach (IUser user in Users)
@@ -94,7 +118,4 @@ public class UserManager
 
         return false;
     }
-
-
-
 }

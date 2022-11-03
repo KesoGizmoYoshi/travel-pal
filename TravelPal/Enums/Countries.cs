@@ -8,6 +8,9 @@ using System.Xml.Linq;
 
 namespace TravelPal.Enums;
 
+/// <summary>
+/// Enum for countries around the world.
+/// </summary>
 public enum Countries
 {
     Afghanistan,

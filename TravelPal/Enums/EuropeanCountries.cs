@@ -8,6 +8,9 @@ using System.Xml.Linq;
 
 namespace TravelPal.Enums;
 
+/// <summary>
+/// Enum for countries that are members of the European Union.
+/// </summary>
 public enum EuropeanCountries
 {
     Austria,
