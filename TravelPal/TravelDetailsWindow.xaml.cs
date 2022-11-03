@@ -304,6 +304,11 @@ public partial class TravelDetailsWindow : Window
         }
     }
 
+    /// <summary>
+    /// Method for selecting a item in the ListView, depending on which item the user selects, the correct UI elements will be visible and populated with the correct value.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void lvPackingList_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         ListViewItem item = (ListViewItem)lvPackingList.SelectedItem;
@@ -318,8 +323,8 @@ public partial class TravelDetailsWindow : Window
 
             if (selectedItem is OtherItem)
             {
-                chbDocument.Visibility = Visibility.Hidden;
-                chbRequired.Visibility = Visibility.Hidden;
+                chbDocument.Visibility = Visibility.Collapsed;
+                chbRequired.Visibility = Visibility.Collapsed;
                 txtNameOfTheItem.IsEnabled = true;
                 txtQuantity.IsEnabled = true;
 
@@ -328,8 +333,8 @@ public partial class TravelDetailsWindow : Window
             }
             else if (selectedItem is TravelDocument)
             {
-                lblQuantity.Visibility = Visibility.Hidden;
-                txtQuantity.Visibility = Visibility.Hidden;
+                lblQuantity.Visibility = Visibility.Collapsed;
+                txtQuantity.Visibility = Visibility.Collapsed;
                 chbDocument.Visibility = Visibility.Visible;
                 chbRequired.Visibility = Visibility.Visible;
                 txtNameOfTheItem.IsEnabled = true;
@@ -347,9 +352,7 @@ public partial class TravelDetailsWindow : Window
                     chbRequired.IsChecked = false;
                 }
             }
-        }
-
-        
+        } 
     }
 
     /// <summary>
@@ -462,31 +465,15 @@ public partial class TravelDetailsWindow : Window
         PopulateListView();
     }
 
-    //private void datePickerStartDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
-    //{
-    //    string test = "test";
-
-    //    if (datePickerEndDate.SelectedDate is not null)
-    //    {
-    //        int travelDays = travelManager.CalculateTravelDays((DateTime)datePickerStartDate.SelectedDate, (DateTime)datePickerEndDate.SelectedDate);
-    //        lblTravelDays.Content = $"Number of travel days: {travelDays}";
-    //    }
-
-    //    datePickerEndDate.BlackoutDates.Add(new CalendarDateRange(DateTime.MinValue, (DateTime)datePickerStartDate.SelectedDate));
-    //}
-
-    //private void datePickerEndDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
-    //{
-    //    if (datePickerStartDate.SelectedDate is not null)
-    //    {
-    //        int travelDays = travelManager.CalculateTravelDays((DateTime)datePickerStartDate.SelectedDate, (DateTime)datePickerEndDate.SelectedDate);
-    //        lblTravelDays.Content = $"Number of travel days: {travelDays}";
-    //    }
-    //}
+    /// <summary>
+    /// Method for selecting an start date, calculates and displays the amount of travel days, if the user selected both start date and end date.
+    /// Also makes user the user the sure cant select an end date that is before the selected start date.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void datePickerStartDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
     {
         datePickerEndDate.SelectedDate = null;
-        datePickerEndDate.IsEnabled = true;
 
         if (datePickerEndDate.SelectedDate is not null)
         {
@@ -498,15 +485,17 @@ public partial class TravelDetailsWindow : Window
         datePickerEndDate.BlackoutDates.Add(new CalendarDateRange(DateTime.MinValue, (DateTime)datePickerStartDate.SelectedDate));
     }
 
+    /// <summary>
+    /// Method for selecting an end date, calculates and displays the amount of travel days, if the user selected both start date and end date.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void datePickerEndDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
     {
-
         if (datePickerStartDate.SelectedDate is not null && datePickerEndDate.SelectedDate is not null)
         {
             int travelDays = travelManager.CalculateTravelDays((DateTime)datePickerStartDate.SelectedDate, (DateTime)datePickerEndDate.SelectedDate);
             lblTravelDays.Content = $"Number of travel days: {travelDays}";
         }
-
-        datePickerEndDate.IsEnabled = false;
     }
 }
