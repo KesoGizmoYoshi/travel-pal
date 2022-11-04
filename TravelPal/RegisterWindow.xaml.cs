@@ -53,7 +53,7 @@ public partial class RegisterWindow : Window
             {
                 throw new ArgumentException("At least 3 chars (Username)");
             }
-            else if (string.IsNullOrWhiteSpace(password)) //|| string.IsNullOrEmpty(confirmPassword)) 
+            else if (string.IsNullOrWhiteSpace(password))
             {
                 throw new ArgumentException("Type in a password");
             }
@@ -61,7 +61,7 @@ public partial class RegisterWindow : Window
             {
                 throw new ArgumentException("At least 5 chars (Password)");
             }
-            else if (!password.Equals(confirmPassword)) //|| password.Length < 5)
+            else if (!password.Equals(confirmPassword))
             {
                 throw new ArgumentException("Password is not matching");
             }
