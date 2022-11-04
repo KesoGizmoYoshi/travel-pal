@@ -65,7 +65,7 @@ public partial class RegisterWindow : Window
             {
                 throw new ArgumentException("Password is not matching");
             }
-            else if(selectedLocation is null)
+            else if (selectedLocation is null)
             {
                 throw new ArgumentException("No location selected");
             }
@@ -74,7 +74,7 @@ public partial class RegisterWindow : Window
 
             bool isUserAdded = this.userManager.AddUser(new User(username, password, location));
 
-            if(isUserAdded)
+            if (isUserAdded)
             {
                 MainWindow mainWindow = new MainWindow(this.userManager, this.travelManager);
                 mainWindow.Show();
